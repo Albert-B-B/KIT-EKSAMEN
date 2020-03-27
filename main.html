@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <head>
-  <!-- engine -->
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
-  <!-- kode til javascript --> 
+  <!-- engine p5-->
+  <script src="p5.js"></script>
+  <!-- kode til javascript -->
   <script src="orbitaler.js"></script>
+  <script>
+    var muted = true;
+    function playsong() {
+      if(muted) {
+        muted = false;
+        document.getElementById("sang").play();
+        document.getElementById("muteKnap").src = "mute.svg";
+      }
+      else {
+        muted = true;
+        document.getElementById("sang").pause();
+        document.getElementById("muteKnap").src = "unmute.svg";
+      }
+    }
+  </script>
   <title>Orbitaler</title>
 </head>
 <body>
-
+  <audio id="sang" loop>
+    <source src="SpaceAmbient.wav" type="audio/wav">
+  </audio>
+  <img src="unmute.svg" id="muteKnap" onclick="playsong()"></img>
 </body>
