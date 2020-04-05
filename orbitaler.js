@@ -1,8 +1,7 @@
 let img
 function setup() {
-  Height = 400
-  Width  = 400
-
+  Height = 400;
+  Width  = 400;
   createCanvas(Height, Width);
   met = new orbital()
 }
@@ -10,10 +9,10 @@ function setup() {
 function draw() {
   stroke(255);
   background(220);
-  mas = new planet()
-  met.display()
-  mas.moveorbital()
-  met.move()
+  mas = new planet();
+  met.display();
+  mas.moveorbital();
+  met.move();
 
 }
 
@@ -22,13 +21,13 @@ class orbital {
     this.x = random(width);
     this.y = random(height);
     this.diameter = 10;
-    this.speedx = random(-0.5, 0.5)
-    this.speedy = random(-0.5, 0.5)
+    this.speedx = random(-0.5, 0.5);
+    this.speedy = random(-0.5, 0.5);
   }
 
   move() {
-    this.x += this.speedx
-    this.y += this.speedy
+    this.x += this.speedx;
+    this.y += this.speedy;
   }
 
   display() {
@@ -43,16 +42,16 @@ class planet {
 
   moveorbital() {
   if (met.x > (Width/2)) {
-    met.speedx -= 0.002
+    met.speedx -= 0.002;
   }
   if (met.y > (Height/2)) {
-    met.speedy -= 0.002
+    met.speedy -= 0.002;
   }
   if (met.x < (Width/2)) {
-    met.speedx += 0.002
+    met.speedx += 0.002;
   }
   if (met.y < (Height/2)) {
-    met.speedy += 0.002
+    met.speedy += 0.002;
   }
   }
 }
