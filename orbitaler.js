@@ -5,10 +5,8 @@ function setup() {
   Height = 400;
   Width  = 400;
   createCanvas(Height, Width);
-  sun = new OrbitalB(Width/2, Height/2, 40, 100)
-  planet = new OrbitalB(100, 100, 10, 10)
-
-  print(rotation_vector(planet,sun))
+  OBList.push(new OrbitalB(Width/2, Height/2, 40, 100))
+  OBList.push(new OrbitalB(100, 100, 10, 10))
 }
 
 function draw() {
@@ -25,10 +23,6 @@ function draw() {
 }
 
 function distance(x1,y1,x2,y2) {
-  print(x1)
-  print(y1)
-  print(x2)
-  print(y2)
   return sqrt(sq((x1-x2)) + sq((y1-y2)));
 }
 
@@ -76,7 +70,6 @@ class OrbitalB {
     for (let i = 0; i < OBList.length; i++) {
       if (i != this.idx) {
         if (checkCollision(OBList[this.idx], OBList[i])) {
-          print('hit')
           resetSketch()
         }
       }
