@@ -15,6 +15,9 @@ function draw() {
   met.move();
 
 }
+function dist(x1,y1,x2,y2) {
+  sqrt(sq((x1-x2)) + sq((y1-y2)^2));
+}
 
 class orbital {
   constructor() {
@@ -23,6 +26,7 @@ class orbital {
     this.diameter = 10;
     this.speedx = random(-0.5, 0.5);
     this.speedy = random(-0.5, 0.5);
+    this.mass = 10^10;
   }
 
   move() {
