@@ -67,8 +67,8 @@ class collisionDetection {
     this.maxDis = mas.diameter/2 + met.diameter/2
     this.disx = (Width/2) - met.x
     this.disy = (Height/2) - met.y
-    print(sqrt(this.disx^2 + this.disy^2))
-    if (sqrt(this.disx^2 + this.disy^2) > this.maxDis) {
+    print(sqrt(sq(this.disx) + sq(this.disy)))
+    if (sqrt(sq(this.disx) + sq(this.disy)) < this.maxDis) {
       print('hit')
     }
   }
