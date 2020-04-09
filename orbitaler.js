@@ -5,8 +5,10 @@ function setup() {
   Height = 400;
   Width  = 400;
   createCanvas(Height, Width);
-  OBList.push(new OrbitalB(Width/2, Height/2, 40, 100))
-  OBList.push(new OrbitalB(100, 100, 10, 10))
+  sun = new OrbitalB(Width/2, Height/2, 40, 100)
+  planet = new OrbitalB(100, 100, 10, 10)
+
+  print(rotation_vector(planet,sun))
 }
 
 function draw() {
@@ -23,6 +25,10 @@ function draw() {
 }
 
 function distance(x1,y1,x2,y2) {
+  print(x1)
+  print(y1)
+  print(x2)
+  print(y2)
   return sqrt(sq((x1-x2)) + sq((y1-y2)));
 }
 
@@ -39,6 +45,11 @@ function resetSketch() {
   OBList.push(new OrbitalB(Width/2, Height/2, 40, 100))
   OBList.push(new OrbitalB(100, 100, 10, 10))
 }
+
+function rotation_vector(obj_1, obj_2) {
+  return [(obj_2.x - obj_1.x)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y), (obj_2.y - obj_1.y)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y)];
+}
+
 
 class OrbitalB {
   constructor(x, y, radius, mass) {
