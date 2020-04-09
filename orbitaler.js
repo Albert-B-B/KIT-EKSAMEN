@@ -3,31 +3,35 @@ function setup() {
   Height = 400;
   Width  = 400;
   createCanvas(Height, Width);
-  met = new orbital()
-  col = new collisionDetection()
+  sun = new OrbitalB(Width/2, Height/2, 40, 100)
+  planet = new OrbitalB(100, 100, 10, 10)
 }
 
 function draw() {
   stroke(255);
   background(220);
-  mas = new planet()
-  met.display()
-  mas.moveorbital()
-  met.move()
-  col.checkCollision()
+  sun.display()
+  planet.display()
+  planet.move()
 
+  planet.display()
+  sun.display()
+
+  //mas.moveorbital()
+  //met.move()
 }
+
 function dist(x1,y1,x2,y2) {
   return sqrt(sq((x1-x2)) + sq((y1-y2)));
 }
 
 class OrbitalB {
-  constructor(x, y, radiusm, mass) {
+  constructor(x, y, radius, mass) {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.speedx = random(-0.5, 0.5);
-    this.speedy = random(-0.5, 0.5);
+    this.speedx = random(-1, 1);
+    this.speedy = random(-1, 1);
     this.mass = mass;
   }
 
@@ -37,7 +41,7 @@ class OrbitalB {
   }
 
   display() {
-    ellipse(this.x, this.y, this.radius, this.radius);
+    ellipse(this.x, this.y, this.radius*2, this.radius*2);
   }
 
   // moveorbital() {
@@ -56,7 +60,7 @@ class OrbitalB {
   // }
 }
 
-checkCollision(obj_1, obj_2)  {
+function checkCollision(obj_1, obj_2)  {
   this.maxDis = obj_1.radius + obj_2.radius
   if (dist(obj_1.x, obj_1.y, obj_2.x, obj_2.y) < this.maxDis) {
     print('hit')
