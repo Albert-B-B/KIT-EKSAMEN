@@ -4,15 +4,17 @@ function setup() {
   Width  = 400;
   createCanvas(Height, Width);
   met = new orbital()
+  col = new collisionDetection()
 }
 
 function draw() {
   stroke(255);
   background(220);
-  mas = new planet();
-  met.display();
-  mas.moveorbital();
-  met.move();
+  mas = new planet()
+  met.display()
+  mas.moveorbital()
+  met.move()
+  col.checkCollision()
 
 }
 function dist(x1,y1,x2,y2) {
@@ -41,7 +43,8 @@ class orbital {
 
 class planet {
   constructor() {
-  ellipse((Height/2), (Width/2), 55);
+  this.diameter = 55
+  ellipse((Height/2), (Width/2), this.diameter);
   }
 
   moveorbital() {
@@ -57,5 +60,20 @@ class planet {
   if (met.y < (Height/2)) {
     met.speedy += 0.002;
   }
+  }
+}
+
+class collisionDetection {
+  constructor() {
+
+  }
+  checkCollision()  {
+    this.maxDis = mas.diameter/2 + met.diameter/2
+    this.disx = (Width/2) - met.x
+    this.disy = (Height/2) - met.y
+    print(sqrt(this.disx^2 + this.disy^2))
+    if (sqrt(this.disx^2 + this.disy^2) > this.maxDis) {
+      print('hit')
+    }
   }
 }
