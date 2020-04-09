@@ -24,10 +24,6 @@ function draw() {
 }
 
 function distance(x1,y1,x2,y2) {
-  print(x1)
-  print(y1)
-  print(x2)
-  print(y2)
   return sqrt(sq((x1-x2)) + sq((y1-y2)));
 }
 
