@@ -21,7 +21,7 @@ function draw() {
   //met.move()
 }
 
-function dist(x1,y1,x2,y2) {
+function distance(x1,y1,x2,y2) {
   return sqrt(sq((x1-x2)) + sq((y1-y2)));
 }
 
