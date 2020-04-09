@@ -21,14 +21,14 @@ function dist(x1,y1,x2,y2) {
   sqrt(sq((x1-x2)) + sq((y1-y2)^2));
 }
 
-class orbital {
-  constructor() {
-    this.x = random(width);
-    this.y = random(height);
-    this.diameter = 10;
+class OrbitalB {
+  constructor(x, y, radiusm, mass) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
     this.speedx = random(-0.5, 0.5);
     this.speedy = random(-0.5, 0.5);
-    this.mass = 10^10;
+    this.mass = mass;
   }
 
   move() {
@@ -37,43 +37,31 @@ class orbital {
   }
 
   display() {
-    ellipse(this.x, this.y, this.diameter, this.diameter);
+    ellipse(this.x, this.y, this.radius, this.radius);
   }
+
+  // moveorbital() {
+  // if (met.x > (Width/2)) {
+  //   met.speedx -= 0.002;
+  // }
+  // if (met.y > (Height/2)) {
+  //   met.speedy -= 0.002;
+  // }
+  // if (met.x < (Width/2)) {
+  //   met.speedx += 0.002;
+  // }
+  // if (met.y < (Height/2)) {
+  //   met.speedy += 0.002;
+  // }
+  // }
 }
 
-class planet {
-  constructor() {
-  this.diameter = 55
-  ellipse((Height/2), (Width/2), this.diameter);
-  }
-
-  moveorbital() {
-  if (met.x > (Width/2)) {
-    met.speedx -= 0.002;
-  }
-  if (met.y > (Height/2)) {
-    met.speedy -= 0.002;
-  }
-  if (met.x < (Width/2)) {
-    met.speedx += 0.002;
-  }
-  if (met.y < (Height/2)) {
-    met.speedy += 0.002;
-  }
-  }
-}
-
-class collisionDetection {
-  constructor() {
-
-  }
-  checkCollision()  {
-    this.maxDis = mas.diameter/2 + met.diameter/2
-    this.disx = (Width/2) - met.x
-    this.disy = (Height/2) - met.y
-    print(sqrt(sq(this.disx) + sq(this.disy)))
-    if (sqrt(sq(this.disx) + sq(this.disy)) < this.maxDis) {
-      print('hit')
-    }
+checkCollision()  {
+  this.maxDis = mas.diameter/2 + met.diameter/2
+  this.disx = (Width/2) - met.x
+  this.disy = (Height/2) - met.y
+  print(sqrt(sq(this.disx) + sq(this.disy)))
+  if (sqrt(sq(this.disx) + sq(this.disy)) < this.maxDis) {
+    print('hit')
   }
 }
