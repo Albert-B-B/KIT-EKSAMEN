@@ -1,7 +1,7 @@
 let img;
 //Universal gravity constant
 let g = 6.674*Math.pow(10,-11);
-let timeRatio = 24*60*60*60;
+let timeRatio = 24*60*60;
 let lengthRatio = 10;
 let OBList = []
 OBnumber = 0;
@@ -86,21 +86,24 @@ class OrbitalB {
   }
 }
 
-class scaleConverter(){
-  constructor{
+class scaleConverter {
+  constructor(){
   }
 
   disRTG(input) {
-    
+    return input*lengthRatio
   }
 
   disGTR(input) {
+    return input/lengthRatio
   }
 
-  velRTG(input) {
+  timeRTG(input) {
+    return input*timeRatio
   }
 
-  velGTR(input) {
+  timeGTR(input) {
+    return input/timeRatio
   }
 
 }
