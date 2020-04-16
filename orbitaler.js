@@ -4,6 +4,7 @@ let g = 6.674*Math.pow(10,-11);
 let timeRatio = 24*60*60*60;
 let lengthRatio = 50000000;
 let OBList = []
+let trailList = []
 OBnumber = 0;
 function setup() {
   Height = 1000;
@@ -50,11 +51,9 @@ function calc_accel(force,obj) {
 function resetSketch() {
   OBList = []
   OBnumber = 0
-  OBList.push(new OrbitalB(Width/2, Height/2, 40, 1.989*Math.pow(10, 30)))
-  OBList.push(new OrbitalB(450, 200, 10, 5.97*Math.pow(10,24)))
-  OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22)))
-  OBList[1].speedx=1.8
-  OBList[2].speedx=1.9
+  OBList.push(new OrbitalB(Width/2, Height/2, 40, 1.989*Math.pow(10, 30), 0, 0))
+  OBList.push(new OrbitalB(450, 200, 10, 5.97*Math.pow(10,24), 3, 0))
+  OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), 3, 0))
 }
 
 function rotation_vector(obj_1, obj_2) {
@@ -72,7 +71,7 @@ class OrbitalB {
     this.mass = mass;
     this.idx = OBnumber
     OBnumber += 1
-    print(this.speedx, InSpeedy)
+    trailList.push(new trail(this.idx))
   }
 
   accelerate(obj) {
@@ -88,9 +87,11 @@ class OrbitalB {
   move() {
     this.x += this.speedx;
     this.y += this.speedy;
+    trailList[this.idx].record()
   }
 
   display() {
+    trailList[this.idx].drawTrail()
     ellipse(this.x, this.y, this.radius*2, this.radius*2);
   }
 
@@ -125,4 +126,23 @@ class scaleConverter {
     return input*timeRatio
   }
 
+}
+
+class trail{
+  constructor(idx){
+  this.idx = idx
+  this.pointsX = []
+  this.pointsY = []
+}
+  record(){
+    this.pointsX.push(OBList[this.idx].x)
+    this.pointsY.push(OBList[this.idx].y)
+  }
+
+  drawTrail(){
+    stroke
+    for (let i = 1; i < this.pointsX.length; i++){
+      line(this.pointsX[i-1], this.pointsY[i-1], this.pointsX[i], this.pointsY[i])
+    }
+  }
 }
