@@ -55,7 +55,7 @@ function resetSketch() {
 }
 
 function rotation_vector(obj_1, obj_2) {
-  print(obj_2.x)
+
   return [(obj_2.x - obj_1.x)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y), (obj_2.y - obj_1.y)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y)];
 }
 
@@ -75,16 +75,16 @@ class OrbitalB {
   accelerate(obj) {
     for (let i = 0; i < OBList.length; i++) {
       if (i != this.idx) {
-        print(rotation_vector(this, OBList[this.idx]))
-        this.speedx += timeRatio*rotation_vector(this, OBList[this.idx])[0]*calc_accel(gravity_force(this,OBList[this.idx]),this);
-        this.speedy += timeRatio*rotation_vector(this, OBList[this.idx])[1]*calc_accel(gravity_force(this,OBList[this.idx]),this);
+        print(this.idx)
+        this.speedx += timeRatio*rotation_vector(this, OBList[i])[0]*calc_accel(gravity_force(this,OBList[i]),this);
+        this.speedy += timeRatio*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this,OBList[i]),this);
       }
     }
   }
 
   move() {
-    // print(this.speedx);
-    // print(this.speedx);
+     print(this.speedx);
+     print(this.speedx);
     this.x += this.speedx;
     this.y += this.speedy;
   }
