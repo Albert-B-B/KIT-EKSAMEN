@@ -19,6 +19,7 @@ function draw() {
 
   for (let i = 0; i < OBList.length; i++) {
     if (i != 0){
+    OBList[i].accelerate();
     OBList[i].move();
   }
     OBList[i].display();
@@ -42,6 +43,10 @@ function checkCollision(obj_1, obj_2)  {
   }
 }
 
+function calc_accel(force,obj) {
+  return force/obj.mass
+}
+
 function resetSketch() {
   OBList = []
   OBnumber = 0
@@ -50,6 +55,7 @@ function resetSketch() {
 }
 
 function rotation_vector(obj_1, obj_2) {
+  print(obj_2.x)
   return [(obj_2.x - obj_1.x)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y), (obj_2.y - obj_1.y)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y)];
 }
 
@@ -59,14 +65,26 @@ class OrbitalB {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.speedx = random(-1, 1);
-    this.speedy = random(-1, 1);
+    this.speedx = 0;
+    this.speedy = 0;
     this.mass = mass;
     this.idx = OBnumber
-    OBnumber +=1
+    OBnumber += 1
+  }
+
+  accelerate(obj) {
+    for (let i = 0; i < OBList.length; i++) {
+      if (i != this.idx) {
+        print(rotation_vector(this, OBList[this.idx]))
+        this.speedx += timeRatio*rotation_vector(this, OBList[this.idx])[0]*calc_accel(gravity_force(this,OBList[this.idx]),this);
+        this.speedy += timeRatio*rotation_vector(this, OBList[this.idx])[1]*calc_accel(gravity_force(this,OBList[this.idx]),this);
+      }
+    }
   }
 
   move() {
+    // print(this.speedx);
+    // print(this.speedx);
     this.x += this.speedx;
     this.y += this.speedy;
   }
