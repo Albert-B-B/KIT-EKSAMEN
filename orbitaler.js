@@ -86,8 +86,6 @@ class OrbitalB {
   }
 
   move() {
-    print(this.speedx);
-    print(this.speedy);
     this.x += this.speedx;
     this.y += this.speedy;
   }
