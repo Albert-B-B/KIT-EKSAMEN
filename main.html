@@ -11,12 +11,12 @@
       if(muted) {
         muted = false;
         document.getElementById("sang").play();
-        document.getElementById("muteKnap").src = "mute.svg";
+        document.getElementById("muteKnap").src = "assets/mute.svg";
       }
       else {
         muted = true;
         document.getElementById("sang").pause();
-        document.getElementById("muteKnap").src = "unmute.svg";
+        document.getElementById("muteKnap").src = "assets/unmute.svg";
       }
     }
   </script>
@@ -27,5 +27,5 @@
   <audio id="sang" loop>
     <source src="SpaceAmbient.wav" type="audio/wav">
   </audio>
-  <img src="unmute.svg" id="muteKnap" onclick="playsong()"></img>
+  <img src="assets/unmute.svg" id="muteKnap" onclick="playsong()"></img>
 </body>
