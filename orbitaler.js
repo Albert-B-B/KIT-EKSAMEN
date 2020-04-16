@@ -1,14 +1,19 @@
-let img
+let img;
+//Universal gravity constant
+let g = 6.674*Math.pow(10,-11);
+let timeRatio = 24*60*60*60;
+let lengthRatio = 10;
 let OBList = []
-OBnumber = 0
+OBnumber = 0;
 function setup() {
-  Height = 400;
-  Width  = 400;
+  Height = 1000;
+  Width  = 1000;
   createCanvas(Height, Width);
   sun = new OrbitalB(Width/2, Height/2, 40, 100)
   planet = new OrbitalB(100, 100, 10, 10)
 
   print(rotation_vector(planet,sun))
+  print(gravity_force(sun,planet))
 }
 
 function draw() {
@@ -24,8 +29,13 @@ function draw() {
   }
 }
 
+
+function gravity_force(obj_1,obj_2) {
+  return (g*obj_1.mass * obj_2.mass)/ sq(distance(obj_1.x, obj_1.y, obj_2.x, obj_2.y))
+}
+
 function distance(x1,y1,x2,y2) {
-  return sqrt(sq((x1-x2)) + sq((y1-y2)));
+  return sqrt(sq((x1-x2)) + sq((y1-y2)))
 }
 
 function checkCollision(obj_1, obj_2)  {
