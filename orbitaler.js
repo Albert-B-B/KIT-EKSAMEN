@@ -75,19 +75,23 @@ class OrbitalB {
       }
     }
   }
+}
 
-  // moveorbital() {
-  // if (met.x > (Width/2)) {
-  //   met.speedx -= 0.002;
-  // }
-  // if (met.y > (Height/2)) {
-  //   met.speedy -= 0.002;
-  // }
-  // if (met.x < (Width/2)) {
-  //   met.speedx += 0.002;
-  // }
-  // if (met.y < (Height/2)) {
-  //   met.speedy += 0.002;
-  // }
-  // }
+class scaleConverter(){
+  constructor{
+  }
+
+  disRTG(input) {
+    
+  }
+
+  disGTR(input) {
+  }
+
+  velRTG(input) {
+  }
+
+  velGTR(input) {
+  }
+
 }
