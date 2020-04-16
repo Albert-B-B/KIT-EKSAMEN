@@ -42,6 +42,10 @@ function checkCollision(obj_1, obj_2)  {
   }
 }
 
+function calc_accel(force,obj) {
+  return force/obj.mass
+}
+
 function resetSketch() {
   OBList = []
   OBnumber = 0
@@ -63,7 +67,12 @@ class OrbitalB {
     this.speedy = random(-1, 1);
     this.mass = mass;
     this.idx = OBnumber
-    OBnumber +=1
+    OBnumber += 1
+  }
+
+  accelerate(obj) {
+      this.speedx += timeRatio*rotation_vector(this, obj)[0]*calc_accel(gravity_force(this,obj),this)
+      this.speedy += timeRatio*rotation_vector(this, obj)[1]*calc_accel(gravity_force(this,obj),this)
   }
 
   move() {
