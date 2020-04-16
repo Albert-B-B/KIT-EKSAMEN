@@ -141,11 +141,15 @@ class trail{
 
   drawTrail(){
     stroke
-    for (let i = 1; i < this.pointsX.length; i++){
-      if (this.pointsX.length > 100){
-        i = this.pointsX.length -99
-      }
+    if (this.pointsX.length > 100){
+    for (let i = this.pointsX.length - 99; i < this.pointsX.length; i++){
       line(this.pointsX[i-1], this.pointsY[i-1], this.pointsX[i], this.pointsY[i])
+      }
+    }
+    else {
+      for (let i = 1; i < this.pointsX.length; i++){
+        line(this.pointsX[i-1], this.pointsY[i-1], this.pointsX[i], this.pointsY[i])
+        }
     }
   }
 }
