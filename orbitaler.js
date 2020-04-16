@@ -9,11 +9,8 @@ function setup() {
   Height = 1000;
   Width  = 1000;
   createCanvas(Height, Width);
-  sun = new OrbitalB(Width/2, Height/2, 40, 100)
-  planet = new OrbitalB(100, 100, 10, 10)
-
-  print(rotation_vector(planet,sun))
-  print(gravity_force(sun,planet))
+  OBList.push(new OrbitalB(Width/2, Height/2, 40, 100))
+  OBList.push(new OrbitalB(100, 100, 10, 10))
 }
 
 function draw() {
@@ -82,7 +79,6 @@ class OrbitalB {
     for (let i = 0; i < OBList.length; i++) {
       if (i != this.idx) {
         if (checkCollision(OBList[this.idx], OBList[i])) {
-          print('hit')
           resetSketch()
         }
       }
