@@ -83,7 +83,6 @@ class OrbitalB {
   accelerate(obj) {
     for (let i = 0; i < OBList.length; i++) {
       if (i != this.idx) {
-        print(convert.disRTG(timeRatio*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this)));
         this.speedx += convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[0]*calc_accel(gravity_force(this, OBList[i]),this));
         this.speedy += convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this));
       }
