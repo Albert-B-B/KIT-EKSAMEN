@@ -7,6 +7,8 @@ let OBList = [];
 let trailList = [];
 let pause = false;
 let pauseButton;
+let createPlanetButton;
+let createFlag = false;
 OBnumber = 0;
 function setup() {
   Height = 1000;
@@ -15,10 +17,47 @@ function setup() {
   convert = new scaleConverter()
   OBList.push(new OrbitalB(Width/2, Height/2, 40, 1.989*Math.pow(10, 30), 0, 0))
   OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
+  //Buttons
   pauseButton = createButton('Pause');
+  createPlanetButton = createButton('New planet');
   pauseButton.position(100,950);
   pauseButton.mousePressed(pause_unpause);
+  createPlanetButton.position(100,925);
+  createPlanetButton.mousePressed(setFlagPlanetCreation);
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
+}
+
+function setFlagPlanetCreation () {
+  createFlag = true;
+}
+function mouseClicked() {
+  if (createFlag === true) {
+    userAddPlanet(mouseX,mouseY)
+  }
+}
+function userAddPlanet(x_pos,y_pos) {
+  display_radius = window.prompt("Display radius in pixels(doesn't effect orbit) ");
+  while (isNaN(display_radius)) {
+    windows.alert("Input a number")
+    display_radius = window.prompt("Display radius in pixels(doesn't effect orbit) ");
+  }
+  mass = window.prompt("Input mass of planet in ton");
+  while (isNaN(mass)) {
+    windows.alert("Input a number")
+    mass = window.prompt("Input mass of planet in ton ");
+  }
+  x_speed = window.prompt("input the speed of the planet in m/s ");
+  while (isNaN(x_speed)) {
+    windows.alert("Input a number")
+    x_speed = window.prompt("input the speed of the planet in m/s");
+  }
+  y_speed = window.prompt("input the speed of the planet in m/s ");
+  while (isNaN(x_speed)) {
+    windows.alert("Input a number")
+    y_speed = window.prompt("input the speed of the planet in m/s");
+  }
+  OBList.push(new OrbitalB(x_pos, y_pos, display_radius, mass/1000, x_speed/lengthRatio, y_speed/lengthRatio))
+  createFlag === false;
 }
 
 function pause_unpause() {
