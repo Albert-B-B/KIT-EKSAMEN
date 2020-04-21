@@ -3,8 +3,9 @@ let img;
 let g = 6.674*Math.pow(10,-11);
 let timeRatio = 60*60*60*10;
 let lengthRatio = 500000000;
-let OBList = []
-let trailList = []
+let OBList = [];
+let trailList = [];
+let pause = False;
 OBnumber = 0;
 function setup() {
   Height = 1000;
@@ -17,6 +18,7 @@ function setup() {
 }
 
 function draw() {
+  if (pause===False) {
   stroke(255);
   background(220);
 
@@ -25,6 +27,10 @@ function draw() {
     OBList[i].move();
     OBList[i].display();
     OBList[i].Collision();
+  }
+  }
+  else {
+    
   }
 }
 
