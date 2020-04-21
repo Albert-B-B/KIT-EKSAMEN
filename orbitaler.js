@@ -140,8 +140,8 @@ class trail{
 
   drawTrail(){
     stroke
-    if (this.pointsX.length > 10000){
-    for (let i = this.pointsX.length - 9999; i < this.pointsX.length; i++){
+    if (this.pointsX.length > 100){
+    for (let i = this.pointsX.length - 99; i < this.pointsX.length; i++){
       line(this.pointsX[i-1], this.pointsY[i-1], this.pointsX[i], this.pointsY[i])
       }
     }
