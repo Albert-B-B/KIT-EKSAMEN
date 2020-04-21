@@ -1,7 +1,7 @@
 let img;
 //Universal gravity constant
 let g = 6.674*Math.pow(10,-11);
-let timeRatio = 60*60*60;
+let timeRatio = 60*60*60*10;
 let lengthRatio = 500000000;
 let OBList = []
 let trailList = []
@@ -12,7 +12,7 @@ function setup() {
   createCanvas(Height, Width);
   convert = new scaleConverter()
   OBList.push(new OrbitalB(Width/2, Height/2, 40, 1.989*Math.pow(10, 30), 0, 0))
-  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005144, 0))
+  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
 
