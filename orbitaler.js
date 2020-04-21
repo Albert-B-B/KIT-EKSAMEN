@@ -1,8 +1,8 @@
 let img;
 //Universal gravity constant
 let g = 6.674*Math.pow(10,-11);
-let timeRatio = 24*60*60*60;
-let lengthRatio = 50000000;
+let timeRatio = 60*60*60;
+let lengthRatio = 500000000;
 let OBList = []
 let trailList = []
 OBnumber = 0;
@@ -12,8 +12,8 @@ function setup() {
   createCanvas(Height, Width);
   convert = new scaleConverter()
   OBList.push(new OrbitalB(Width/2, Height/2, 40, 1.989*Math.pow(10, 30), 0, 0))
-  OBList.push(new OrbitalB(450, 200, 10, 5.97*Math.pow(10,24), 5, 0))
-  OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), 3, 0))
+  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005144, 0))
+  //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
 
 function draw() {
@@ -77,16 +77,16 @@ class OrbitalB {
   accelerate(obj) {
     for (let i = 0; i < OBList.length; i++) {
       if (i != this.idx) {
-        //print(timeRatio*rotation_vector(this, OBList[this.idx])[0]*calc_accel(gravity_force(this,OBList[this.idx]),this))
-        this.speedx += timeRatio*convert.disRTG(rotation_vector(this, OBList[i])[0]*calc_accel(gravity_force(this, OBList[i]),this));
-        this.speedy += timeRatio*convert.disRTG(rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this));
+        print(convert.disRTG(timeRatio*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this)));
+        this.speedx += convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[0]*calc_accel(gravity_force(this, OBList[i]),this));
+        this.speedy += convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this));
       }
     }
   }
 
   move() {
-    this.x += this.speedx;
-    this.y += this.speedy;
+    this.x += timeRatio/60*this.speedx;
+    this.y += timeRatio/60*this.speedy;
     trailList[this.idx].record()
   }
 
@@ -141,8 +141,8 @@ class trail{
 
   drawTrail(){
     stroke
-    if (this.pointsX.length > 100){
-    for (let i = this.pointsX.length - 99; i < this.pointsX.length; i++){
+    if (this.pointsX.length > 10000){
+    for (let i = this.pointsX.length - 9999; i < this.pointsX.length; i++){
       line(this.pointsX[i-1], this.pointsY[i-1], this.pointsX[i], this.pointsY[i])
       }
     }
