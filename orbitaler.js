@@ -1,7 +1,7 @@
 let img;
 //Universal gravity constant
 let g = 6.674*Math.pow(10,-11);
-let timeRatio = 60*60*60;
+let timeRatio = 60*60*60*10;
 let lengthRatio = 500000000;
 let OBList = []
 let trailList = []
@@ -77,7 +77,6 @@ class OrbitalB {
   accelerate(obj) {
     for (let i = 0; i < OBList.length; i++) {
       if (i != this.idx) {
-        print(convert.disRTG(timeRatio*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this)));
         this.speedx += convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[0]*calc_accel(gravity_force(this, OBList[i]),this));
         this.speedy += convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this));
       }
