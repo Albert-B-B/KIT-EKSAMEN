@@ -6,8 +6,13 @@ let lengthRatio = 500000000;
 let OBList = [];
 let trailList = [];
 let pause = false;
-let pauseButton;
+let imgtodraw = []
 OBnumber = 0;
+
+function preload() {
+  pauseicon = loadImage('https://i.imgur.com/mvth4yQ.png')
+}
+
 function setup() {
   Height = 1000;
   Width  = 1000;
@@ -15,10 +20,38 @@ function setup() {
   convert = new scaleConverter()
   OBList.push(new OrbitalB(Width/2, Height/2, 40, 1.989*Math.pow(10, 30), 0, 0))
   OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
-  pauseButton = createButton('Pause');
-  pauseButton.position(100,950);
+
+  pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
+  pauseButton.position(15,20);
   pauseButton.mousePressed(pause_unpause);
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
+}
+
+function draw() {
+
+  if (pause===false) {
+
+    stroke(255);
+    background(220);
+    // pauseButton = image(pauseicon, 50, 50, 100, 100);
+    for (let i = 0; i < OBList.length; i++) {
+      OBList[i].accelerate();
+      OBList[i].move();
+      OBList[i].display();
+      OBList[i].Collision();
+    }
+  }
+  else {
+
+  }
+}
+
+function mousePressed() {
+  if (value === 0) {
+    value = 255;
+  } else {
+    value = 0;
+  }
 }
 
 function pause_unpause() {
@@ -27,23 +60,6 @@ function pause_unpause() {
   }
   else {
     pause=false;
-  }
-}
-
-function draw() {
-  if (pause===false) {
-  stroke(255);
-  background(220);
-
-  for (let i = 0; i < OBList.length; i++) {
-    OBList[i].accelerate();
-    OBList[i].move();
-    OBList[i].display();
-    OBList[i].Collision();
-  }
-  }
-  else {
-
   }
 }
 
@@ -78,6 +94,20 @@ function resetSketch() {
 function rotation_vector(obj_1, obj_2) {
   return [(obj_2.x - obj_1.x)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y), (obj_2.y - obj_1.y)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y)];
 }
+
+// class SVG {
+//   constructor(path, posx, posy, sizex, sizey){
+//     this.svgimg = loadImage(path)
+//     this.posx
+//     this.posy
+//     this.sizex
+//     this.sizey
+//   }
+//
+//   drawSVG() {
+//     image(this.svgimg, this.posx, this.posy, this.sizex, this.posy);
+//   }
+// }
 
 
 class OrbitalB {
