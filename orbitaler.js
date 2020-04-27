@@ -75,13 +75,11 @@ function draw() {
   }
   if (OBList[activePlanet].radius != document.getElementById("radiusSlider").value || OBList[activePlanet].radius != document.getElementById("radiusBox").value) {
     if (document.getElementById("radiusSlider").value != OBList[activePlanet].radius) {
-      OBList[activePlanet].radius = document.getElementById("radiusSlider").value
+      OBList[activePlanet].radius = parseInt(document.getElementById("radiusSlider").value);
     }
     else if (document.getElementById("radiusBox").value != OBList[activePlanet].radius) {
-      OBList[activePlanet].radius = document.getElementById("radiusBox").value
+      OBList[activePlanet].radius = parseInt(document.getElementById("radiusBox").value);
     }
-    OBList[0].Collision();
-    OBList[1].Collision();
     document.getElementById("radiusSlider").value = OBList[activePlanet].radius
     document.getElementById("radiusBox").value = OBList[activePlanet].radius
   }
@@ -92,7 +90,7 @@ function draw() {
       OBList[i].accelerate();
       OBList[i].move();
       OBList[i].display();
-
+      OBList[i].Collision();
     }
   }
   else {
@@ -111,8 +109,9 @@ function distance(x1,y1,x2,y2) {
 
 function checkCollision(obj_1, obj_2)  {
   this.maxDis = obj_1.radius + obj_2.radius
-  print(distance(obj_1.x, obj_1.y, obj_2.x, obj_2.y) )
-  print()
+  print(obj_1.radius)
+  print(obj_2.radius)
+  print(this.maxDis)
   if (distance(obj_1.x, obj_1.y, obj_2.x, obj_2.y) < this.maxDis) {
     return true
   }
