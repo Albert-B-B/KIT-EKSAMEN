@@ -9,55 +9,47 @@ let pause = false;
 let pauseButton;
 let createPlanetButton;
 let createFlag = false;
+let activePlanet = 0;
 OBnumber = 0;
 function setup() {
   Height = 1000;
   Width  = 1000;
-  createCanvas(Height, Width);
+  canvas = createCanvas(Height, Width);
   convert = new scaleConverter()
-  OBList.push(new OrbitalB(Width/2, Height/2, 40, 1.989*Math.pow(10, 30), 0, 0))
+  canvas.parent('sketch-holder');
+  OBList.push(new OrbitalB(Width/2, Height/2, 100, 1.989*Math.pow(10, 30), 0, 0))
   OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
+
   //Buttons
   pauseButton = createButton('Pause');
   createPlanetButton = createButton('New planet');
-  pauseButton.position(100,950);
+  pauseButton.position(400,950);
   pauseButton.mousePressed(pause_unpause);
-  createPlanetButton.position(100,925);
-  createPlanetButton.mousePressed(setFlagPlanetCreation);
+  createPlanetButton.position(400,925);
+  createPlanetButton.mousePressed(setFlagPlanetCreation());
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
 
+function removePlanet(planetIdx) {
+  for (let i = planetIdx; i < OBList.length; i++) {
+    OBList[i].idx -= 1
+  }
+  OBList.splice(planetIdx,1)
+}
+
 function setFlagPlanetCreation () {
-  createFlag = true;
+  createFlag = 1;
 }
 function mouseClicked() {
-  if (createFlag === true) {
+  if (createFlag === 2) {
     userAddPlanet(mouseX,mouseY)
+  }
+  if (createFlag === 1) {
+    createFlag = 2;
   }
 }
 function userAddPlanet(x_pos,y_pos) {
-  display_radius = window.prompt("Display radius in pixels(doesn't effect orbit) ");
-  while (isNaN(display_radius)) {
-    windows.alert("Input a number")
-    display_radius = window.prompt("Display radius in pixels(doesn't effect orbit) ");
-  }
-  mass = window.prompt("Input mass of planet in ton");
-  while (isNaN(mass)) {
-    windows.alert("Input a number")
-    mass = window.prompt("Input mass of planet in ton ");
-  }
-  x_speed = window.prompt("input the speed of the planet in m/s ");
-  while (isNaN(x_speed)) {
-    windows.alert("Input a number")
-    x_speed = window.prompt("input the speed of the planet in m/s");
-  }
-  y_speed = window.prompt("input the speed of the planet in m/s ");
-  while (isNaN(x_speed)) {
-    windows.alert("Input a number")
-    y_speed = window.prompt("input the speed of the planet in m/s");
-  }
-  OBList.push(new OrbitalB(x_pos, y_pos, display_radius, mass/1000, x_speed/lengthRatio, y_speed/lengthRatio))
-  createFlag === false;
+
 }
 
 function pause_unpause() {
@@ -68,18 +60,40 @@ function pause_unpause() {
     pause=false;
   }
 }
-
+//
 function draw() {
-  if (pause===false) {
-  stroke(255);
-  background(220);
-
-  for (let i = 0; i < OBList.length; i++) {
-    OBList[i].accelerate();
-    OBList[i].move();
-    OBList[i].display();
-    OBList[i].Collision();
+  if(60*document.getElementById("timescaleSlider").value != timeRatio || 60*document.getElementById("timescaleBox").value != timeRatio) {
+    oldTimeRatio = timeRatio;
+    if (60*document.getElementById("timescaleSlider").value != timeRatio) {
+      timeRatio = 60*document.getElementById("timescaleSlider").value
+    }
+    else if (60*document.getElementById("timescaleBox").value != timeRatio) {
+      timeRatio = 60*document.getElementById("timescaleBox").value
+    }
+    document.getElementById("timescaleSlider").value = timeRatio/60
+    document.getElementById("timescaleBox").value = timeRatio/60
   }
+  if (OBList[activePlanet].radius != document.getElementById("radiusSlider").value || OBList[activePlanet].radius != document.getElementById("radiusBox").value) {
+    if (document.getElementById("radiusSlider").value != OBList[activePlanet].radius) {
+      OBList[activePlanet].radius = document.getElementById("radiusSlider").value
+    }
+    else if (document.getElementById("radiusBox").value != OBList[activePlanet].radius) {
+      OBList[activePlanet].radius = document.getElementById("radiusBox").value
+    }
+    OBList[0].Collision();
+    OBList[1].Collision();
+    document.getElementById("radiusSlider").value = OBList[activePlanet].radius
+    document.getElementById("radiusBox").value = OBList[activePlanet].radius
+  }
+  if (pause===false) {
+    stroke(255);
+    background(220);
+    for (let i = 0; i < OBList.length; i++) {
+      OBList[i].accelerate();
+      OBList[i].move();
+      OBList[i].display();
+
+    }
   }
   else {
 
@@ -97,6 +111,8 @@ function distance(x1,y1,x2,y2) {
 
 function checkCollision(obj_1, obj_2)  {
   this.maxDis = obj_1.radius + obj_2.radius
+  print(distance(obj_1.x, obj_1.y, obj_2.x, obj_2.y) )
+  print()
   if (distance(obj_1.x, obj_1.y, obj_2.x, obj_2.y) < this.maxDis) {
     return true
   }
