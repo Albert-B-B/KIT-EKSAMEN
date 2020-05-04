@@ -12,10 +12,16 @@ let createPlanetButton;
 let createFlag = false;
 let activePlanet = 0;
 
+let sunImg
+let earthImg
+
 OBnumber = 0;
 
 function preload() {
-  pauseicon = loadImage('https://i.imgur.com/mvth4yQ.png')
+  pauseicon = loadImage('https://i.imgur.com/9QKrCtH.png')
+  sunImg = loadImage('https://i.imgur.com/b5aWo6E.png')
+  earthImg = loadImage('https://i.imgur.com/lG3jIA3.png')
+  backgroundImg = loadImage('https://i.imgur.com/MHu6bBY.jpg')
 }
 
 function setup() {
@@ -27,6 +33,10 @@ function setup() {
   OBList.push(new OrbitalB(Width/2, Height/2, 100, 1.989*Math.pow(10, 30), 0, 0))
   OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
   document.getElementById("massBox").value = 1.989*Math.pow(10, 30)
+  OBList[0].setImg(sunImg)
+  OBList[1].setImg(earthImg)
+
+
 
   //Buttons
   pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
@@ -129,6 +139,7 @@ function draw() {
   if (pause===false) {
     stroke(255);
     background(220);
+    image(backgroundImg, 0, 0, width, (backgroundImg.width/width)*backgroundImg.height)
     for (let i = 0; i < OBList.length; i++) {
       OBList[i].accelerate();
       OBList[i].move();
@@ -198,8 +209,13 @@ class OrbitalB {
     this.speedy = InSpeedy
     this.mass = mass;
     this.idx = OBnumber
+    this.image = null
     OBnumber += 1
     trailList.push(new trail(this.idx))
+  }
+
+  setImg(img){
+    this.image = img
   }
 
   accelerate(obj) {
@@ -219,7 +235,11 @@ class OrbitalB {
 
   display() {
     trailList[this.idx].drawTrail()
+    if (this.image == null) {
     ellipse(this.x, this.y, this.radius*2, this.radius*2);
+    } else {
+    image(this.image, this.x - this.radius, this.y - this.radius, this.radius*2, this.radius*2)
+    }
   }
 
   Collision() {
