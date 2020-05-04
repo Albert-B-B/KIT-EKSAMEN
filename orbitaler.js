@@ -104,8 +104,8 @@ function mousePressed() {
 
 function pause_unpause() {
   print('pause triggered')
-  if (pause===false) {
-    pause=true;
+  if (pause==false) {
+    pause = true;
     print('paused')
   } else {
     pause = false
@@ -145,7 +145,7 @@ function draw() {
 
   }
   else {
-    pause=false;
+    
   }
 }
 
