@@ -26,6 +26,7 @@ function setup() {
   canvas.parent('sketch-holder');
   OBList.push(new OrbitalB(Width/2, Height/2, 100, 1.989*Math.pow(10, 30), 0, 0))
   OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
+  document.getElementById("massBox").value = 1.989*Math.pow(10, 30)
 
   //Buttons
   pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
@@ -109,17 +110,21 @@ function draw() {
     document.getElementById("timescaleSlider").value = timeRatio/60
     document.getElementById("timescaleBox").value = timeRatio/60
   }
+
   if (OBList[activePlanet].radius != document.getElementById("radiusSlider").value || OBList[activePlanet].radius != document.getElementById("radiusBox").value) {
     if (document.getElementById("radiusSlider").value != OBList[activePlanet].radius) {
-      OBList[activePlanet].radius = document.getElementById("radiusSlider").value
+      OBList[activePlanet].radius = parseInt(document.getElementById("radiusSlider").value);
     }
     else if (document.getElementById("radiusBox").value != OBList[activePlanet].radius) {
-      OBList[activePlanet].radius = document.getElementById("radiusBox").value
+      OBList[activePlanet].radius = parseInt(document.getElementById("radiusBox").value);
     }
-    OBList[0].Collision();
-    OBList[1].Collision();
     document.getElementById("radiusSlider").value = OBList[activePlanet].radius
     document.getElementById("radiusBox").value = OBList[activePlanet].radius
+  }
+
+  if (OBList[activePlanet].mass != document.getElementById("massBox").value) {
+    OBList[activePlanet].mass = parseInt(document.getElementById("massBox").value);
+    document.getElementById("massBox").value = OBList[activePlanet].mass
   }
   if (pause===false) {
     stroke(255);
@@ -128,7 +133,7 @@ function draw() {
       OBList[i].accelerate();
       OBList[i].move();
       OBList[i].display();
-
+      OBList[i].Collision();
     }
 
   }
@@ -148,8 +153,6 @@ function distance(x1,y1,x2,y2) {
 
 function checkCollision(obj_1, obj_2)  {
   this.maxDis = obj_1.radius + obj_2.radius
-  print(distance(obj_1.x, obj_1.y, obj_2.x, obj_2.y) )
-  print()
   if (distance(obj_1.x, obj_1.y, obj_2.x, obj_2.y) < this.maxDis) {
     return true
   }
