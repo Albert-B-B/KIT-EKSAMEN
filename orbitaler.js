@@ -10,6 +10,7 @@ let pauseButton;
 let createPlanetButton;
 let createFlag = false;
 let activePlanet = 0;
+let CollisionFlag = true;
 OBnumber = 0;
 function setup() {
   Height = 1000;
@@ -17,10 +18,9 @@ function setup() {
   canvas = createCanvas(Height, Width);
   convert = new scaleConverter()
   canvas.parent('sketch-holder');
-  OBList.push(new OrbitalB(Width/2, Height/2, 100, 1.989*Math.pow(10, 30), 0, 0))
+  OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0))
   OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
-  document.getElementById("massBox").value = 1.989*Math.pow(10, 30)
-
+  loadPlanetEditor(activePlanet);
   //Buttons
   pauseButton = createButton('Pause');
   createPlanetButton = createButton('New planet');
@@ -41,6 +41,7 @@ function removePlanet(planetIdx) {
 function setFlagPlanetCreation () {
   createFlag = 1;
 }
+
 function mouseClicked() {
   if (createFlag === 2) {
     userAddPlanet(mouseX,mouseY)
@@ -49,8 +50,23 @@ function mouseClicked() {
     createFlag = 2;
   }
 }
-function userAddPlanet(x_pos,y_pos) {
 
+function loadPlanetEditor(idx) {
+  document.getElementById("radiusSlider").value = OBList[idx].radius
+  document.getElementById("radiusBox").value = OBList[idx].radius
+  temp = 0
+  if (OBList[idx].mass > 1)
+    for (let count = 0; OBList[idx].mass/(pow(10,count)) > 10; count++){
+      temp = count + 1
+      }
+  else {
+
+    for (let count = 0; OBList[idx].mass/(pow(10,count)) < 1; count--){
+      temp = count - 1
+      }
+  }
+  document.getElementById("massBox").value = OBList[idx].mass/(pow(10,temp))
+  document.getElementById("massExponentBox").value = temp
 }
 
 function pause_unpause() {
@@ -63,7 +79,7 @@ function pause_unpause() {
 }
 //
 function draw() {
-  if(60*document.getElementById("timescaleSlider").value != timeRatio || 60*document.getElementById("timescaleBox").value != timeRatio) {
+  if(60*document.getElementById("timescaleSlider").value != timeRatio) {
     oldTimeRatio = timeRatio;
     if (60*document.getElementById("timescaleSlider").value != timeRatio) {
       timeRatio = 60*document.getElementById("timescaleSlider").value
@@ -74,22 +90,12 @@ function draw() {
     document.getElementById("timescaleSlider").value = timeRatio/60
     document.getElementById("timescaleBox").value = timeRatio/60
   }
-
-  if (OBList[activePlanet].radius != document.getElementById("radiusSlider").value || OBList[activePlanet].radius != document.getElementById("radiusBox").value) {
-    if (document.getElementById("radiusSlider").value != OBList[activePlanet].radius) {
-      OBList[activePlanet].radius = parseInt(document.getElementById("radiusSlider").value);
-    }
-    else if (document.getElementById("radiusBox").value != OBList[activePlanet].radius) {
-      OBList[activePlanet].radius = parseInt(document.getElementById("radiusBox").value);
-    }
+  if (OBList[activePlanet].radius != document.getElementById("radiusSlider").value ) {
+    OBList[activePlanet].radius = parseInt(document.getElementById("radiusSlider").value);
     document.getElementById("radiusSlider").value = OBList[activePlanet].radius
     document.getElementById("radiusBox").value = OBList[activePlanet].radius
   }
 
-  if (OBList[activePlanet].mass != document.getElementById("massBox").value) {
-    OBList[activePlanet].mass = parseInt(document.getElementById("massBox").value);
-    document.getElementById("massBox").value = OBList[activePlanet].mass
-  }
   if (pause===false) {
     stroke(255);
     background(220);
@@ -97,7 +103,9 @@ function draw() {
       OBList[i].accelerate();
       OBList[i].move();
       OBList[i].display();
-      OBList[i].Collision();
+      if (CollisionFlag === true) {
+        OBList[i].Collision();
+      }
     }
   }
   else {
@@ -207,6 +215,7 @@ class scaleConverter {
 class trail{
   constructor(idx){
   this.idx = idx
+  this.trailLength = 100
   this.pointsX = []
   this.pointsY = []
 }
@@ -217,8 +226,8 @@ class trail{
 
   drawTrail(){
     stroke
-    if (this.pointsX.length > 100){
-    for (let i = this.pointsX.length - 99; i < this.pointsX.length; i++){
+    if (this.pointsX.length > this.trailLength ){
+    for (let i = this.pointsX.length - this.trailLength + 1; i < this.pointsX.length; i++){
       line(this.pointsX[i-1], this.pointsY[i-1], this.pointsX[i], this.pointsY[i])
       }
     }
