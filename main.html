@@ -37,6 +37,9 @@
       <p>timescale: </p>
         <input type="range" min="0" max="100000" value="36000" id="timescaleSlider">  <input type="text" size="10" value="36000"  id="timescaleBox">
       <br>
+      <p>Colissions on/off:</p>
+      <input type="checkbox" id="colissionCheckbox" >
+      <br>
       <h3>Planet settings</h3>
       <!-- activeplanet information too be added -->
       <p>Radius: </p>
@@ -51,7 +54,12 @@
       <p>Speed x-axis:</p>
         <input type="range" min="1" max="1000" value="10" id="radiusSlider">  <input type="text" size="10" value="10"  id="radiusBox">
       <br>
+      <button  id="saveSettings" style="color:white;background-color:#4fd673;padding: 10 10 10 10;border: none; ">Save</button>
+      <br>
+      <button  id="deletePlanet" style="color:white;background-color:#ff3126;padding: 10 10 10 10;border: none; ">Delete planet</button>
+      <br>
       <img src="assets/unmute.svg" id="muteKnap" onclick="playsong()"></img> </div>
+
     <div style="margin-left: 320px;" id="sketch-holder"></div>
 </div>
 </body>
