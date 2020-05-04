@@ -35,7 +35,7 @@
     <div style="width: 300px; float: left;">
       <h1>Editor</h1>
       <h3>Generel settings</h3>
-      <p>timescale: </p>
+      <p>timescale (antal simulerede sekunder pr sekund): </p>
         <input type="range" min="0" max="100000" value="36000" id="timescaleSlider">  <input type="text" size="10" value="36000"  id="timescaleBox">
       <br>
       <p>Colissions on/off:</p>
@@ -46,18 +46,26 @@
       <p>Radius: </p>
         <input type="range" min="0" max="100" value="100" id="radiusSlider">  <input type="text" size="10" value="100"  id="radiusBox">
       <br>
-      <p>mass: </p><!-- <input type="range" min="1" max="100" value="1" id="massSlider">-->
-          <input type="text" size="30" value="10"  id="massBox">
+      <p>mass of planet in kg: </p><!-- <input type="range" min="1" max="100" value="1" id="massSlider">-->
+          <input type="text" size="20" value="10"  id="massBox"> <input type="text" size="10" value="10"  id="massExponentBox">
       <br>
       <p>Speed y-axis: </p>
-        <input type="range" min="1" max="100" value="10" id="radiusSlider">  <input type="text" size="10" value="10"  id="radiusBox">
+          <input type="text" size="20" value="10"  id="radiusBox"> <input type="text" size="10" value="10"  id="massExponentBox">
       <br>
       <p>Speed x-axis:</p>
-        <input type="range" min="1" max="1000" value="10" id="radiusSlider">  <input type="text" size="10" value="10"  id="radiusBox">
+      <input type="text" size="20" value="10"  id="radiusBox"> <input type="text" size="10" value="10"  id="massExponentBox">
+      <br>
+      <p>Length of trail:</p>
+        <input type="text" size="10" value="10"  id="trailLengthBox">
+      <br>
+      <p>Trail on/off:</p>
+        <input type="checkbox" id="trailCheckbox" >
       <br>
       <button  id="saveSettings" style="color:white;background-color:#4fd673;padding: 10 10 10 10;border: none; ">Save</button>
       <br>
       <button  id="deletePlanet" style="color:white;background-color:#ff3126;padding: 10 10 10 10;border: none; ">Delete planet</button>
+      <br>
+      Synths from ©Music Maker and music made by Anders Bjerrum Jensen
       <br>
       <img src="assets/unmute.svg" id="muteKnap" onclick="playsong()"></img> </div>
 
