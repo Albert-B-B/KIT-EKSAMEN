@@ -6,7 +6,12 @@ let lengthRatio = 500000000;
 let OBList = [];
 let trailList = [];
 let pause = false;
-let imgtodraw = []
+
+let pauseButton;
+let createPlanetButton;
+let createFlag = false;
+let activePlanet = 0;
+
 OBnumber = 0;
 
 function preload() {
@@ -16,35 +21,62 @@ function preload() {
 function setup() {
   Height = 1000;
   Width  = 1000;
-  createCanvas(Height, Width);
+  canvas = createCanvas(Height, Width);
   convert = new scaleConverter()
-  OBList.push(new OrbitalB(Width/2, Height/2, 40, 1.989*Math.pow(10, 30), 0, 0))
+  canvas.parent('sketch-holder');
+  OBList.push(new OrbitalB(Width/2, Height/2, 100, 1.989*Math.pow(10, 30), 0, 0))
   OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
 
+  //Buttons
   pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
-  pauseButton.position(15,20);
+  pauseButton.position(200,20);
+  createPlanetButton = createButton('New planet');
   pauseButton.mousePressed(pause_unpause);
+  createPlanetButton.position(400,925);
+  createPlanetButton.mousePressed(setFlagPlanetCreation());
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
 
-function draw() {
-
-  if (pause===false) {
-
-    stroke(255);
-    background(220);
-    // pauseButton = image(pauseicon, 50, 50, 100, 100);
-    for (let i = 0; i < OBList.length; i++) {
-      OBList[i].accelerate();
-      OBList[i].move();
-      OBList[i].display();
-      OBList[i].Collision();
-    }
+function removePlanet(planetIdx) {
+  for (let i = planetIdx; i < OBList.length; i++) {
+    OBList[i].idx -= 1
   }
-  else {
+  OBList.splice(planetIdx,1)
+}
 
+function setFlagPlanetCreation () {
+  createFlag = 1;
+}
+function mouseClicked() {
+  if (createFlag === 2) {
+    userAddPlanet(mouseX,mouseY)
+  }
+  if (createFlag === 1) {
+    createFlag = 2;
   }
 }
+function userAddPlanet(x_pos,y_pos) {
+
+}
+
+// function pause_unpause() {
+//   if (pause===false) {
+//
+//     stroke(255);
+//     background(220);
+//     // pauseButton = image(pauseicon, 50, 50, 100, 100);
+//     for (let i = 0; i < OBList.length; i++) {
+//       OBList[i].accelerate();
+//       OBList[i].move();
+//       OBList[i].display();
+//       OBList[i].Collision();
+//     }
+//   }
+//   else {
+//
+//   }
+// }
+
 
 function mousePressed() {
   if (value === 0) {
@@ -55,8 +87,50 @@ function mousePressed() {
 }
 
 function pause_unpause() {
+  print('pause triggered')
   if (pause===false) {
     pause=true;
+    print('paused')
+  } else {
+    pause = false
+    print('resumed')
+  }
+}
+//
+function draw() {
+  if(60*document.getElementById("timescaleSlider").value != timeRatio || 60*document.getElementById("timescaleBox").value != timeRatio) {
+    oldTimeRatio = timeRatio;
+    if (60*document.getElementById("timescaleSlider").value != timeRatio) {
+      timeRatio = 60*document.getElementById("timescaleSlider").value
+    }
+    else if (60*document.getElementById("timescaleBox").value != timeRatio) {
+      timeRatio = 60*document.getElementById("timescaleBox").value
+    }
+    document.getElementById("timescaleSlider").value = timeRatio/60
+    document.getElementById("timescaleBox").value = timeRatio/60
+  }
+  if (OBList[activePlanet].radius != document.getElementById("radiusSlider").value || OBList[activePlanet].radius != document.getElementById("radiusBox").value) {
+    if (document.getElementById("radiusSlider").value != OBList[activePlanet].radius) {
+      OBList[activePlanet].radius = document.getElementById("radiusSlider").value
+    }
+    else if (document.getElementById("radiusBox").value != OBList[activePlanet].radius) {
+      OBList[activePlanet].radius = document.getElementById("radiusBox").value
+    }
+    OBList[0].Collision();
+    OBList[1].Collision();
+    document.getElementById("radiusSlider").value = OBList[activePlanet].radius
+    document.getElementById("radiusBox").value = OBList[activePlanet].radius
+  }
+  if (pause===false) {
+    stroke(255);
+    background(220);
+    for (let i = 0; i < OBList.length; i++) {
+      OBList[i].accelerate();
+      OBList[i].move();
+      OBList[i].display();
+
+    }
+
   }
   else {
     pause=false;
@@ -74,6 +148,8 @@ function distance(x1,y1,x2,y2) {
 
 function checkCollision(obj_1, obj_2)  {
   this.maxDis = obj_1.radius + obj_2.radius
+  print(distance(obj_1.x, obj_1.y, obj_2.x, obj_2.y) )
+  print()
   if (distance(obj_1.x, obj_1.y, obj_2.x, obj_2.y) < this.maxDis) {
     return true
   }

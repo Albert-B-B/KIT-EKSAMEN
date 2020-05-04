@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <head>
+  <!-- css sheet-->
+  <link rel="stylesheet" type="text/css" href="frontpage.css">
   <!-- engine p5-->
   <script src="p5.js"></script>
   <!-- kode til javascript -->
@@ -23,10 +25,34 @@
   </script>
   <!-- meta data -->
   <title>Orbitaler</title>
+
 </head>
 <body>
   <audio id="sang" loop>
     <source src="SpaceAmbient.wav" type="audio/wav">
   </audio>
-  <img src="assets/unmute.svg" id="muteKnap" onclick="playsong()"></img>
+  <div style="width: 100%; overflow: hidden;">
+    <div style="width: 300px; float: left;">
+      <h1>Editor</h1>
+      <h3>Generel settings</h3>
+      <p>timescale: </p>
+        <input type="range" min="0" max="100000" value="36000" id="timescaleSlider">  <input type="text" size="10" value="36000"  id="timescaleBox">
+      <br>
+      <h3>Planet settings</h3>
+      <!-- activeplanet information too be added -->
+      <p>Radius: </p>
+        <input type="range" min="0" max="100" value="100" id="radiusSlider">  <input type="text" size="10" value="100"  id="radiusBox">
+      <br>
+      <p>mass: </p>
+        <input type="range" min="1" max="100" value="10" id="radiusSlider">  <input type="text" size="10" value="10"  id="radiusBox">
+      <br>
+      <p>Speed y-axis: </p>
+        <input type="range" min="1" max="100" value="10" id="radiusSlider">  <input type="text" size="10" value="10"  id="radiusBox">
+      <br>
+      <p>Speed x-axis:</p>
+        <input type="range" min="1" max="100" value="10" id="radiusSlider">  <input type="text" size="10" value="10"  id="radiusBox">
+      <br>
+      <img src="assets/unmute.svg" id="muteKnap" onclick="playsong()"></img> </div>
+    <div style="margin-left: 320px;" id="sketch-holder"></div>
+</div>
 </body>
