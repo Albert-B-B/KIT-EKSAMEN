@@ -6,12 +6,18 @@ let lengthRatio = 500000000;
 let OBList = [];
 let trailList = [];
 let pause = false;
+
 let pauseButton;
 let createPlanetButton;
 let createFlag = false;
 let activePlanet = 0;
 let CollisionFlag = true;
 OBnumber = 0;
+
+function preload() {
+  pauseicon = loadImage('https://i.imgur.com/mvth4yQ.png')
+}
+
 function setup() {
   Height = 1000;
   Width  = 1000;
@@ -22,9 +28,9 @@ function setup() {
   OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
   loadPlanetEditor(activePlanet);
   //Buttons
-  pauseButton = createButton('Pause');
+  pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
+  pauseButton.position(200,20);
   createPlanetButton = createButton('New planet');
-  pauseButton.position(400,950);
   pauseButton.mousePressed(pause_unpause);
   createPlanetButton.position(400,925);
   createPlanetButton.mousePressed(setFlagPlanetCreation());
@@ -69,12 +75,41 @@ function loadPlanetEditor(idx) {
   document.getElementById("massExponentBox").value = temp
 }
 
+// function pause_unpause() {
+//   if (pause===false) {
+//
+//     stroke(255);
+//     background(220);
+//     // pauseButton = image(pauseicon, 50, 50, 100, 100);
+//     for (let i = 0; i < OBList.length; i++) {
+//       OBList[i].accelerate();
+//       OBList[i].move();
+//       OBList[i].display();
+//       OBList[i].Collision();
+//     }
+//   }
+//   else {
+//
+//   }
+// }
+
+
+function mousePressed() {
+  if (value === 0) {
+    value = 255;
+  } else {
+    value = 0;
+  }
+}
+
 function pause_unpause() {
+  print('pause triggered')
   if (pause===false) {
     pause=true;
-  }
-  else {
-    pause=false;
+    print('paused')
+  } else {
+    pause = false
+    print('resumed')
   }
 }
 //
@@ -107,9 +142,10 @@ function draw() {
         OBList[i].Collision();
       }
     }
+
   }
   else {
-
+    pause=false;
   }
 }
 
@@ -144,6 +180,20 @@ function resetSketch() {
 function rotation_vector(obj_1, obj_2) {
   return [(obj_2.x - obj_1.x)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y), (obj_2.y - obj_1.y)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y)];
 }
+
+// class SVG {
+//   constructor(path, posx, posy, sizex, sizey){
+//     this.svgimg = loadImage(path)
+//     this.posx
+//     this.posy
+//     this.sizex
+//     this.sizey
+//   }
+//
+//   drawSVG() {
+//     image(this.svgimg, this.posx, this.posy, this.sizex, this.posy);
+//   }
+// }
 
 
 class OrbitalB {
