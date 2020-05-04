@@ -25,7 +25,7 @@ function setup() {
   convert = new scaleConverter()
   canvas.parent('sketch-holder');
   OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0))
-  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
+  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0, 0))
   loadPlanetEditor(activePlanet);
   //Buttons
   pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
@@ -73,26 +73,48 @@ function loadPlanetEditor(idx) {
   }
   document.getElementById("massBox").value = OBList[idx].mass/(pow(10,temp))
   document.getElementById("massExponentBox").value = temp
+  temp=0
+  if (OBList[idx].speedx > 1)
+    for (let count = 0; OBList[idx].speedx/(pow(10,count)) > 10; count++){
+      temp = count + 1
+      }
+  else if (OBList[idx].speedx === 0) {
+    document.getElementById("speedxBox").value = 0
+    document.getElementById("speedxExponentBox").value = 0
+  }
+  else {
+
+    for (let count = 0; OBList[idx].speedx/(pow(10,count)) < 1; count--){
+      temp = count - 1
+      }
+  }
+  document.getElementById("speedxBox").value = OBList[idx].speedx/(pow(10,temp))
+  document.getElementById("speedxExponentBox").value = temp
+  temp = 0
+  if (OBList[idx].speedy > 1 && OBList[idx].speedy !== 0)
+    for (let count = 0; OBList[idx].speedy/(pow(10,count)) > 10; count++){
+      temp = count + 1
+      }
+      else if (OBList[idx].speedx === 0) {
+        document.getElementById("speedyBox").value = 0
+        document.getElementById("speedxExponentBox").value = 0
+      }
+  else {
+    for (let count = 0; OBList[idx].speedy/(pow(10,count)) < 1; count--){
+      temp = count - 1
+      }
+  }
+  document.getElementById("speedyBox").value = OBList[idx].speedy/(pow(10,temp))
+  document.getElementById("speedyExponentBox").value = temp
+
+  document.getElementById("trailLengthBox").value = trailList[idx].trailLength
+  if (trailList[idx].trailOn === true){
+    document.getElementById("trailCheckbox").checked = true;
+  }
+  else {
+    document.getElementById("trailCheckbox").checked = false;
+  }
 }
-
-// function pause_unpause() {
-//   if (pause===false) {
-//
-//     stroke(255);
-//     background(220);
-//     // pauseButton = image(pauseicon, 50, 50, 100, 100);
-//     for (let i = 0; i < OBList.length; i++) {
-//       OBList[i].accelerate();
-//       OBList[i].move();
-//       OBList[i].display();
-//       OBList[i].Collision();
-//     }
-//   }
-//   else {
-//
-//   }
-// }
-
 
 function mousePressed() {
   if (value === 0) {
@@ -145,7 +167,7 @@ function draw() {
 
   }
   else {
-    
+
   }
 }
 
@@ -266,6 +288,7 @@ class trail{
   constructor(idx){
   this.idx = idx
   this.trailLength = 100
+  this.trailOn = true
   this.pointsX = []
   this.pointsY = []
 }
