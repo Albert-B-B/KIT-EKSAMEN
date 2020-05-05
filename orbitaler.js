@@ -10,7 +10,7 @@ let pause = false;
 let pauseButton;
 let createPlanetButton;
 let createFlag = false;
-let activePlanet = 0;
+let activePlanet = 1;
 let CollisionFlag = true;
 OBnumber = 0;
 
@@ -25,7 +25,7 @@ function setup() {
   convert = new scaleConverter()
   canvas.parent('sketch-holder');
   OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0))
-  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0, 0))
+  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
   loadPlanetEditor(activePlanet);
   //Buttons
   pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
@@ -33,7 +33,6 @@ function setup() {
   createPlanetButton = createButton('New planet');
   pauseButton.mousePressed(pause_unpause);
   createPlanetButton.position(400,925);
-  createPlanetButton.mousePressed(setFlagPlanetCreation());
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
 
@@ -48,14 +47,7 @@ function setFlagPlanetCreation () {
   createFlag = 1;
 }
 
-function mouseClicked() {
-  if (createFlag === 2) {
-    userAddPlanet(mouseX,mouseY)
-  }
-  if (createFlag === 1) {
-    createFlag = 2;
-  }
-}
+
 
 function loadPlanetEditor(idx) {
   document.getElementById("radiusSlider").value = OBList[idx].radius
@@ -113,14 +105,6 @@ function loadPlanetEditor(idx) {
   }
   else {
     document.getElementById("trailCheckbox").checked = false;
-  }
-}
-
-function mousePressed() {
-  if (value === 0) {
-    value = 255;
-  } else {
-    value = 0;
   }
 }
 
