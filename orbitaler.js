@@ -71,6 +71,8 @@ function removePlanet(planetIdx) {
   }
   OBList.splice(planetIdx,1)
   trailList.splice(planetIdx,1)
+  activePlanet -= 1
+  loadPlanetEditor(activePlanet)
 }
 
 function setFlagPlanetCreation () {
