@@ -36,7 +36,7 @@
       <h1>Editor</h1>
       <h3>Generel settings</h3>
       <p>timescale (antal simulerede sekunder pr sekund): </p>
-        <input type="range" min="0" max="100000" value="36000" id="timescaleSlider">  <input type="text" size="10" value="36000"  id="timescaleBox">
+        <input type="range" min="0" max="1000000" value="36000" id="timescaleSlider">  <input type="text" size="10" value="36000"  id="timescaleBox">
       <br>
       <p>Colissions on/off:</p>
       <input type="checkbox" id="colissionCheckbox" checked="true" >
@@ -46,13 +46,13 @@
       <p>Radius: </p>
         <input type="range" min="0" max="100" value="100" id="radiusSlider">  <input type="text" size="10" value="100"  id="radiusBox">
       <br>
-      <p>mass of planet in kg: </p><!-- <input type="range" min="1" max="100" value="1" id="massSlider">-->
+      <p>mass of planet in kg: </p>
           <input type="text" size="20" value="10"  id="massBox"> <input type="text" size="10" value="10"  id="massExponentBox">
       <br>
-      <p>Speed x-axis: </p>
+      <p>Speed x-axis in m/s: </p>
           <input type="text" size="20" value="10"  id="speedxBox"> <input type="text" size="10" value="10"  id="speedxExponentBox">
       <br>
-      <p>Speed y-axis:</p>
+      <p>Speed y-axis in m/s:</p>
       <input type="text" size="20" value="10"  id="speedyBox"> <input type="text" size="10" value="10"  id="speedyExponentBox">
       <br>
       <p>Length of trail:</p>
@@ -61,7 +61,7 @@
       <p>Trail on/off:</p>
         <input type="checkbox" id="trailCheckbox" >
       <br>
-      <button  id="saveSettings" onclick="" style="color:white;background-color:#4fd673;padding: 10 10 10 10;border: none; ">Save</button>
+      <button  id="saveSettings" onclick="saveSettings()" style="color:white;background-color:#4fd673;padding: 10 10 10 10;border: none; ">Save</button>
       <br>
       <button  id="deletePlanet" onclick="removePlanet()" style="color:white;background-color:#ff3126;padding: 10 10 10 10;border: none; ">Delete planet</button>
       <br>

@@ -10,7 +10,7 @@ let pause = false;
 let pauseButton;
 let createPlanetButton;
 let createFlag = false;
-let activePlanet = 0;
+let activePlanet = 1;
 
 
 let sunImg
@@ -36,6 +36,7 @@ function setup() {
   canvas.parent('sketch-holder');
   OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0))
   OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
+
   OBList[0].setImg(sunImg)
   OBList[1].setImg(earthImg)
 
@@ -50,6 +51,19 @@ function setup() {
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
 
+function saveSettings() {
+  timeRatio = document.getElementById("timescaleBox").value*60
+  document.getElementById("timescaleSlider").value = document.getElementById("timescaleBox").value
+  CollisionFlag = document.getElementById("colissionCheckbox").checked
+  OBList[activePlanet].radius = document.getElementById("radiusBox").value
+  document.getElementById("radiusSlider").value = document.getElementById("radiusBox").value
+  OBList[activePlanet].mass = document.getElementById("massBox").value*Math.pow(10,document.getElementById("massExponentBox").value)
+  OBList[activePlanet].speedx = convert.disRTG(document.getElementById("speedxBox").value)*Math.pow(10,document.getElementById("speedxExponentBox").value)
+  OBList[activePlanet].speedy = convert.disRTG(document.getElementById("speedyBox").value)*Math.pow(10,document.getElementById("speedyExponentBox").value)
+  trailList[activePlanet].trailLength = document.getElementById("trailLengthBox").value
+  trailList[activePlanet].trailOn = document.getElementById("trailCheckbox").checked
+}
+
 function removePlanet(planetIdx) {
   for (let i = planetIdx; i < OBList.length; i++) {
     OBList[i].idx -= 1
@@ -57,8 +71,6 @@ function removePlanet(planetIdx) {
   }
   OBList.splice(planetIdx,1)
   trailList.splice(planetIdx,1)
-  print(OBList)
-  print(trailList)
 }
 
 function setFlagPlanetCreation () {
@@ -104,37 +116,37 @@ function loadPlanetEditor(idx) {
   document.getElementById("massBox").value = OBList[idx].mass/(pow(10,temp))
   document.getElementById("massExponentBox").value = temp
   temp=0
-  if (OBList[idx].speedx > 1)
-    for (let count = 0; OBList[idx].speedx/(pow(10,count)) > 10; count++){
+  if (convert.disGTR(OBList[idx].speedx) > 1) {
+    for (let count = 0; convert.disGTR(OBList[idx].speedx)/(pow(10,count)) > 10; count++){
       temp = count + 1
       }
+  }
   else if (OBList[idx].speedx === 0) {
     document.getElementById("speedxBox").value = 0
     document.getElementById("speedxExponentBox").value = 0
   }
   else {
-
-    for (let count = 0; OBList[idx].speedx/(pow(10,count)) < 1; count--){
+    for (let count = 0; convert.disGTR(OBList[idx].speedx)/(pow(10,count)) < 1; count--){
       temp = count - 1
       }
   }
-  document.getElementById("speedxBox").value = OBList[idx].speedx/(pow(10,temp))
+  document.getElementById("speedxBox").value = convert.disGTR(OBList[idx].speedx)/(pow(10,temp))
   document.getElementById("speedxExponentBox").value = temp
   temp = 0
-  if (OBList[idx].speedy > 1 && OBList[idx].speedy !== 0)
-    for (let count = 0; OBList[idx].speedy/(pow(10,count)) > 10; count++){
+  if (convert.disGTR(OBList[idx].speedy) > 1)
+    for (let count = 0; convert.disGTR(OBList[idx].speedy)/(pow(10,count)) > 10; count++){
       temp = count + 1
       }
-      else if (OBList[idx].speedx === 0) {
+  else if (OBList[idx].speedy === 0) {
         document.getElementById("speedyBox").value = 0
-        document.getElementById("speedxExponentBox").value = 0
+        document.getElementById("speedyExponentBox").value = 0
       }
   else {
-    for (let count = 0; OBList[idx].speedy/(pow(10,count)) < 1; count--){
+    for (let count = 0; convert.disGTR(OBList[idx].speedy)/(pow(10,count)) < 1; count--){
       temp = count - 1
       }
   }
-  document.getElementById("speedyBox").value = OBList[idx].speedy/(pow(10,temp))
+  document.getElementById("speedyBox").value = convert.disGTR(OBList[idx].speedy)/(pow(10,temp))
   document.getElementById("speedyExponentBox").value = temp
 
   document.getElementById("trailLengthBox").value = trailList[idx].trailLength
