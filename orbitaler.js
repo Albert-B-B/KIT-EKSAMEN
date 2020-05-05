@@ -65,6 +65,26 @@ function setFlagPlanetCreation () {
   createFlag = 1;
 }
 
+function mousePressed(){
+  print('mouse pressed')
+  for (let i = 0; i < OBList.length; i++) {
+    print(i)
+    if (distance(OBList[i].x, OBList[i].y, mouseX, mouseY) < OBList[i].radius) {
+
+      if (OBList[i].moveByMouse == false) {
+        OBList[i].moveByMouse = true
+        OBList[i].x = mouseX
+        OBList[i].y = mouseY
+      } else {
+        OBList[i].moveByMouse = false
+      }
+      // print('true')
+      // OBList[i].x = mouseX
+      // OBList[i].y = mouseY
+    }
+  }
+}
+
 
 
 function loadPlanetEditor(idx) {
@@ -219,6 +239,7 @@ class OrbitalB {
     this.image = null
     OBnumber += 1
     trailList.push(new trail(this.idx))
+    this.moveByMouse = false
   }
 
   setImg(img){
@@ -235,8 +256,13 @@ class OrbitalB {
   }
 
   move() {
-    this.x += timeRatio/60*this.speedx;
-    this.y += timeRatio/60*this.speedy;
+    if (this.moveByMouse != true) {
+      this.x += timeRatio/60*this.speedx;
+      this.y += timeRatio/60*this.speedy;
+    } else {
+      this.x = mouseX
+      this.y = mouseY
+    }
     trailList[this.idx].record()
   }
 
