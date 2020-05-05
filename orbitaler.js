@@ -35,7 +35,7 @@ function setup() {
   convert = new scaleConverter()
   canvas.parent('sketch-holder');
   OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0))
-  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0, 0))
+  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
   OBList[0].setImg(sunImg)
   OBList[1].setImg(earthImg)
 
@@ -130,13 +130,13 @@ function loadPlanetEditor(idx) {
   }
 }
 
-function mousePressed() {
-  if (value === 0) {
-    value = 255;
-  } else {
-    value = 0;
-  }
-}
+// function mousePressed() {
+//   if (value === 0) {
+//     value = 255;
+//   } else {
+//     value = 0;
+//   }
+// }
 
 function pause_unpause() {
   print('pause triggered')
@@ -207,11 +207,7 @@ function calc_accel(force,obj) {
 }
 
 function resetSketch() {
-  OBList = []
-  OBnumber = 0
-  OBList.push(new OrbitalB(Width/2, Height/2, 40, 1.989*Math.pow(10, 30), 0, 0))
-  OBList.push(new OrbitalB(450, 200, 10, 5.97*Math.pow(10,24), 3, 0))
-  OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), 3, 0))
+print('collided and reset')
 }
 
 function rotation_vector(obj_1, obj_2) {
