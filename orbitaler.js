@@ -166,7 +166,12 @@ function loadPlanetEditor(idx) {
 //   }
 // }
 function uglyFix(idx) {
-  temp=0
+  temp = 0
+  negative_flag = false
+  if (convert.disGTR(OBList[idx].speedx) < 0)  {
+    negative_flag = true
+    OBList[idx].speedx = -OBList[idx].speedx
+  }
   if (convert.disGTR(OBList[idx].speedx) > 1) {
     for (let count = 0; convert.disGTR(OBList[idx].speedx)/(pow(10,count)) > 10; count++){
       temp = count + 1
@@ -181,9 +186,17 @@ function uglyFix(idx) {
       temp = count - 1
       }
   }
+  if (negative_flag) {
+    OBList[idx].speedx = -OBList[idx].speedx
+  }
   document.getElementById("speedxBox").value = convert.disGTR(OBList[idx].speedx)/(pow(10,temp))
   document.getElementById("speedxExponentBox").value = temp
   temp = 0
+  negative_flag = false
+  if (convert.disGTR(OBList[idx].speedy) < 0)  {
+    negative_flag = true
+    OBList[idx].speedy = -OBList[idx].speedy
+  }
   if (convert.disGTR(OBList[idx].speedy) > 1)
     for (let count = 0; convert.disGTR(OBList[idx].speedy)/(pow(10,count)) > 10; count++){
       temp = count + 1
@@ -196,6 +209,9 @@ function uglyFix(idx) {
     for (let count = 0; convert.disGTR(OBList[idx].speedy)/(pow(10,count)) < 1; count--){
       temp = count - 1
       }
+  }
+  if (negative_flag) {
+    OBList[idx].speedy = -OBList[idx].speedy 
   }
   document.getElementById("speedyBox").value = convert.disGTR(OBList[idx].speedy)/(pow(10,temp))
   document.getElementById("speedyExponentBox").value = temp
