@@ -35,7 +35,7 @@ function setup() {
   convert = new scaleConverter()
   canvas.parent('sketch-holder');
   OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0))
-  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 00005956, 0))
+  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
   OBList[0].setImg(sunImg)
   OBList[1].setImg(earthImg)
 
@@ -53,8 +53,12 @@ function setup() {
 function removePlanet(planetIdx) {
   for (let i = planetIdx; i < OBList.length; i++) {
     OBList[i].idx -= 1
+    trailList[i].idx -= 1
   }
   OBList.splice(planetIdx,1)
+  trailList.splice(planetIdx,1)
+  print(OBList)
+  print(trailList)
 }
 
 function setFlagPlanetCreation () {
@@ -123,7 +127,6 @@ function loadPlanetEditor(idx) {
 }
 
 function pause_unpause() {
-  print('pause triggered')
   if (pause==false) {
     pause = true;
   } else {
@@ -199,21 +202,6 @@ function resetSketch() {
 function rotation_vector(obj_1, obj_2) {
   return [(obj_2.x - obj_1.x)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y), (obj_2.y - obj_1.y)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y)];
 }
-
-// class SVG {
-//   constructor(path, posx, posy, sizex, sizey){
-//     this.svgimg = loadImage(path)
-//     this.posx
-//     this.posy
-//     this.sizex
-//     this.sizey
-//   }
-//
-//   drawSVG() {
-//     image(this.svgimg, this.posx, this.posy, this.sizex, this.posy);
-//   }
-// }
-
 
 class OrbitalB {
   constructor(x, y, radius, mass, InSpeedx, InSpeedy) {

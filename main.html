@@ -39,7 +39,7 @@
         <input type="range" min="0" max="100000" value="36000" id="timescaleSlider">  <input type="text" size="10" value="36000"  id="timescaleBox">
       <br>
       <p>Colissions on/off:</p>
-      <input type="checkbox" id="colissionCheckbox" >
+      <input type="checkbox" id="colissionCheckbox" checked="true" >
       <br>
       <h3>Planet settings</h3>
       <!-- activeplanet information too be added -->
@@ -63,7 +63,7 @@
       <br>
       <button  id="saveSettings" onclick="" style="color:white;background-color:#4fd673;padding: 10 10 10 10;border: none; ">Save</button>
       <br>
-      <button  id="deletePlanet" style="color:white;background-color:#ff3126;padding: 10 10 10 10;border: none; ">Delete planet</button>
+      <button  id="deletePlanet" onclick="removePlanet()" style="color:white;background-color:#ff3126;padding: 10 10 10 10;border: none; ">Delete planet</button>
       <br>
       Synths from ©Music Maker and music made by Anders Bjerrum Jensen
       <br>
