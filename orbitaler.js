@@ -47,29 +47,25 @@ function setup() {
   createPlanetButton = createButton('New planet');
   pauseButton.mousePressed(pause_unpause);
   createPlanetButton.position(400,925);
-  createPlanetButton.mousePressed(setFlagPlanetCreation());
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
 
 function removePlanet(planetIdx) {
   for (let i = planetIdx; i < OBList.length; i++) {
     OBList[i].idx -= 1
+    trailList[i].idx -= 1
   }
   OBList.splice(planetIdx,1)
+  trailList.splice(planetIdx,1)
+  print(OBList)
+  print(trailList)
 }
 
 function setFlagPlanetCreation () {
   createFlag = 1;
 }
 
-function mouseClicked() {
-  if (createFlag === 2) {
-    userAddPlanet(mouseX,mouseY)
-  }
-  if (createFlag === 1) {
-    createFlag = 2;
-  }
-}
+
 
 function loadPlanetEditor(idx) {
   document.getElementById("radiusSlider").value = OBList[idx].radius
@@ -139,13 +135,10 @@ function loadPlanetEditor(idx) {
 // }
 
 function pause_unpause() {
-  print('pause triggered')
   if (pause==false) {
     pause = true;
-    print('paused')
   } else {
     pause = false
-    print('resumed')
   }
 }
 //
@@ -213,21 +206,6 @@ print('collided and reset')
 function rotation_vector(obj_1, obj_2) {
   return [(obj_2.x - obj_1.x)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y), (obj_2.y - obj_1.y)/distance(obj_1.x,obj_1.y,obj_2.x,obj_2.y)];
 }
-
-// class SVG {
-//   constructor(path, posx, posy, sizex, sizey){
-//     this.svgimg = loadImage(path)
-//     this.posx
-//     this.posy
-//     this.sizex
-//     this.sizey
-//   }
-//
-//   drawSVG() {
-//     image(this.svgimg, this.posx, this.posy, this.sizex, this.posy);
-//   }
-// }
-
 
 class OrbitalB {
   constructor(x, y, radius, mass, InSpeedx, InSpeedy) {
