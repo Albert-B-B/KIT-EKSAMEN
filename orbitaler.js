@@ -10,7 +10,7 @@ let pause = false;
 let pauseButton;
 let createPlanetButton;
 let createFlag = false;
-let activePlanet = 1;
+let activePlanet = 0;
 let CollisionFlag = true;
 OBnumber = 0;
 
@@ -112,10 +112,8 @@ function pause_unpause() {
   print('pause triggered')
   if (pause==false) {
     pause = true;
-    print('paused')
   } else {
     pause = false
-    print('resumed')
   }
 }
 //
