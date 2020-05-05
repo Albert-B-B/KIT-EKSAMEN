@@ -165,7 +165,42 @@ function loadPlanetEditor(idx) {
 //     value = 0;
 //   }
 // }
+function uglyFix(idx) {
+  temp=0
+  if (convert.disGTR(OBList[idx].speedx) > 1) {
+    for (let count = 0; convert.disGTR(OBList[idx].speedx)/(pow(10,count)) > 10; count++){
+      temp = count + 1
+      }
+  }
+  else if (OBList[idx].speedx === 0) {
+    document.getElementById("speedxBox").value = 0
+    document.getElementById("speedxExponentBox").value = 0
+  }
+  else {
+    for (let count = 0; convert.disGTR(OBList[idx].speedx)/(pow(10,count)) < 1; count--){
+      temp = count - 1
+      }
+  }
+  document.getElementById("speedxBox").value = convert.disGTR(OBList[idx].speedx)/(pow(10,temp))
+  document.getElementById("speedxExponentBox").value = temp
+  temp = 0
+  if (convert.disGTR(OBList[idx].speedy) > 1)
+    for (let count = 0; convert.disGTR(OBList[idx].speedy)/(pow(10,count)) > 10; count++){
+      temp = count + 1
+      }
+  else if (OBList[idx].speedy === 0) {
+        document.getElementById("speedyBox").value = 0
+        document.getElementById("speedyExponentBox").value = 0
+      }
+  else {
+    for (let count = 0; convert.disGTR(OBList[idx].speedy)/(pow(10,count)) < 1; count--){
+      temp = count - 1
+      }
+  }
+  document.getElementById("speedyBox").value = convert.disGTR(OBList[idx].speedy)/(pow(10,temp))
+  document.getElementById("speedyExponentBox").value = temp
 
+}
 function pause_unpause() {
   if (pause==false) {
     pause = true;
@@ -174,6 +209,7 @@ function pause_unpause() {
   }
 }
 //
+countFrames = 0;
 function draw() {
   if(60*document.getElementById("timescaleSlider").value != timeRatio) {
     oldTimeRatio = timeRatio;
@@ -197,6 +233,14 @@ function draw() {
     background(220);
     image(backgroundImg, 0, 0, width, (backgroundImg.width/width)*backgroundImg.height)
     for (let i = 0; i < OBList.length; i++) {
+      print(countFrames)
+      if (countFrames === 10) {
+        uglyFix(activePlanet);
+        countFrames = 0;
+      }
+      else {
+        countFrames += 1;
+      }
       OBList[i].accelerate();
       OBList[i].move();
       OBList[i].display();
