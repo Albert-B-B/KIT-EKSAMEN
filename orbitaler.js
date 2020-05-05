@@ -251,7 +251,15 @@ function draw() {
 
   }
   else {
-
+    for (let i = 0; i < OBList.length; i++) {
+      if (OBList[i].moveByMouse == true) {
+        stroke(255);
+        background(220);
+        image(backgroundImg, 0, 0, width, (backgroundImg.width/width)*backgroundImg.height)
+        OBList[i].move();
+      }
+      OBList[i].display();
+    }
   }
 }
 
