@@ -211,7 +211,7 @@ function uglyFix(idx) {
       }
   }
   if (negative_flag) {
-    OBList[idx].speedy = -OBList[idx].speedy 
+    OBList[idx].speedy = -OBList[idx].speedy
   }
   document.getElementById("speedyBox").value = convert.disGTR(OBList[idx].speedy)/(pow(10,temp))
   document.getElementById("speedyExponentBox").value = temp
@@ -267,11 +267,9 @@ function draw() {
 
   }
   else {
+    image(backgroundImg, 0, 0, width, (backgroundImg.width/width)*backgroundImg.height)
     for (let i = 0; i < OBList.length; i++) {
       if (OBList[i].moveByMouse == true) {
-        stroke(255);
-        background(220);
-        image(backgroundImg, 0, 0, width, (backgroundImg.width/width)*backgroundImg.height)
         OBList[i].move();
       }
       OBList[i].display();
