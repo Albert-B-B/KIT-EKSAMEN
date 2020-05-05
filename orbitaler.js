@@ -35,7 +35,7 @@ function setup() {
   convert = new scaleConverter()
   canvas.parent('sketch-holder');
   OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0))
-  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0))
+  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), -0.00005956, 0))
 
   OBList[0].setImg(sunImg)
   OBList[1].setImg(earthImg)
@@ -71,6 +71,8 @@ function removePlanet(planetIdx) {
   }
   OBList.splice(planetIdx,1)
   trailList.splice(planetIdx,1)
+  activePlanet -= 1
+  loadPlanetEditor(activePlanet)
 }
 
 function setFlagPlanetCreation () {
@@ -115,40 +117,7 @@ function loadPlanetEditor(idx) {
   }
   document.getElementById("massBox").value = OBList[idx].mass/(pow(10,temp))
   document.getElementById("massExponentBox").value = temp
-  temp=0
-  if (convert.disGTR(OBList[idx].speedx) > 1) {
-    for (let count = 0; convert.disGTR(OBList[idx].speedx)/(pow(10,count)) > 10; count++){
-      temp = count + 1
-      }
-  }
-  else if (OBList[idx].speedx === 0) {
-    document.getElementById("speedxBox").value = 0
-    document.getElementById("speedxExponentBox").value = 0
-  }
-  else {
-    for (let count = 0; convert.disGTR(OBList[idx].speedx)/(pow(10,count)) < 1; count--){
-      temp = count - 1
-      }
-  }
-  document.getElementById("speedxBox").value = convert.disGTR(OBList[idx].speedx)/(pow(10,temp))
-  document.getElementById("speedxExponentBox").value = temp
-  temp = 0
-  if (convert.disGTR(OBList[idx].speedy) > 1)
-    for (let count = 0; convert.disGTR(OBList[idx].speedy)/(pow(10,count)) > 10; count++){
-      temp = count + 1
-      }
-  else if (OBList[idx].speedy === 0) {
-        document.getElementById("speedyBox").value = 0
-        document.getElementById("speedyExponentBox").value = 0
-      }
-  else {
-    for (let count = 0; convert.disGTR(OBList[idx].speedy)/(pow(10,count)) < 1; count--){
-      temp = count - 1
-      }
-  }
-  document.getElementById("speedyBox").value = convert.disGTR(OBList[idx].speedy)/(pow(10,temp))
-  document.getElementById("speedyExponentBox").value = temp
-
+  uglyFix(activePlanet);
   document.getElementById("trailLengthBox").value = trailList[idx].trailLength
   if (trailList[idx].trailOn === true){
     document.getElementById("trailCheckbox").checked = true;
