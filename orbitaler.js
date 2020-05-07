@@ -92,6 +92,7 @@ function mousePressed(){
       } else {
         OBList[i].moveByMouse = false
       }
+      break;
       // print('true')
       // OBList[i].x = mouseX
       // OBList[i].y = mouseY
@@ -127,13 +128,7 @@ function loadPlanetEditor(idx) {
   }
 }
 
-// function mousePressed() {
-//   if (value === 0) {
-//     value = 255;
-//   } else {
-//     value = 0;
-//   }
-// }
+
 function uglyFix(idx) {
   temp = 0
   negative_flag = false
@@ -193,7 +188,7 @@ function pause_unpause() {
     pause = false
   }
 }
-//
+
 countFrames = 0;
 function draw() {
   if(60*document.getElementById("timescaleSlider").value != timeRatio) {
