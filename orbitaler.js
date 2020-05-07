@@ -48,6 +48,7 @@ function setup() {
   createPlanetButton = createButton('New planet');
   pauseButton.mousePressed(pause_unpause);
   createPlanetButton.position(400,925);
+  createPlanetButton.mousePressed(createNewPlanet);
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
 
@@ -75,16 +76,15 @@ function removePlanet(planetIdx) {
   loadPlanetEditor(activePlanet)
 }
 
-function setFlagPlanetCreation () {
-  createFlag = 1;
+function createNewPlanet() {
+  OBList.push(new OrbitalB(0, 0, 20, 1, 0, 0))
 }
 
 function mousePressed(){
-  print('mouse pressed')
   for (let i = 0; i < OBList.length; i++) {
-    print(i)
     if (distance(OBList[i].x, OBList[i].y, mouseX, mouseY) < OBList[i].radius) {
-
+      activePlanet = OBList[i].idx
+      loadPlanetEditor(activePlanet)
       if (OBList[i].moveByMouse == false) {
         OBList[i].moveByMouse = true
         OBList[i].x = mouseX
@@ -218,7 +218,6 @@ function draw() {
     background(220);
     image(backgroundImg, 0, 0, width, (backgroundImg.width/width)*backgroundImg.height)
     for (let i = 0; i < OBList.length; i++) {
-      print(countFrames)
       if (countFrames === 10) {
         uglyFix(activePlanet);
         countFrames = 0;
@@ -267,7 +266,7 @@ function calc_accel(force,obj) {
 }
 
 function resetSketch() {
-print('collided and reset')
+
 }
 
 function rotation_vector(obj_1, obj_2) {
