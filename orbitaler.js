@@ -11,7 +11,7 @@ let pauseButton;
 let createPlanetButton;
 let createFlag = false;
 let activePlanet = 1;
-
+let planetSkins = []
 
 let sunImg
 let earthImg
@@ -23,10 +23,10 @@ OBnumber = 0;
 
 function preload() {
   pauseicon = loadImage('https://i.imgur.com/9QKrCtH.png')
-  sunImg = loadImage('https://i.imgur.com/b5aWo6E.png')
-  earthImg = loadImage('https://i.imgur.com/lG3jIA3.png')
   backgroundImg = loadImage('https://i.imgur.com/MHu6bBY.jpg')
   lengthScaleImage = loadImage('https://i.imgur.com/BilmiNC.png')
+  planetSkinsRaw = ['https://i.imgur.com/b5aWo6E.png','https://i.imgur.com/lG3jIA3.png']
+  planetSkins = [null, loadImage('https://i.imgur.com/b5aWo6E.png'),loadImage('https://i.imgur.com/lG3jIA3.png'),]
 }
 
 function setup() {
@@ -35,11 +35,9 @@ function setup() {
   canvas = createCanvas(Height, Width);
   convert = new scaleConverter()
   canvas.parent('sketch-holder');
-  OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0))
-  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), -0.00005956, 0))
+  OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0,1))
+  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), -0.00005956, 0,2))
 
-  OBList[0].setImg(sunImg)
-  OBList[1].setImg(earthImg)
 
   loadPlanetEditor(activePlanet);
 
@@ -218,6 +216,7 @@ function draw() {
     textSize(18);
     text('500 000 km', 850, 910);
     stroke(255);
+    fill(255, 255, 255);
     for (let i = 0; i < OBList.length; i++) {
       if (countFrames === 10) {
         uglyFix(activePlanet);
@@ -275,7 +274,7 @@ function rotation_vector(obj_1, obj_2) {
 }
 
 class OrbitalB {
-  constructor(x, y, radius, mass, InSpeedx, InSpeedy) {
+  constructor(x, y, radius, mass, InSpeedx, InSpeedy, skin) {
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -283,7 +282,7 @@ class OrbitalB {
     this.speedy = InSpeedy
     this.mass = mass;
     this.idx = OBnumber
-    this.image = null
+    this.image = planetSkins[skin]
     OBnumber += 1
     trailList.push(new trail(this.idx))
     this.moveByMouse = false
