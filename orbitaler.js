@@ -26,6 +26,7 @@ function preload() {
   sunImg = loadImage('https://i.imgur.com/b5aWo6E.png')
   earthImg = loadImage('https://i.imgur.com/lG3jIA3.png')
   backgroundImg = loadImage('https://i.imgur.com/MHu6bBY.jpg')
+  lengthScaleImage = loadImage('https://i.imgur.com/BilmiNC.png')
 }
 
 function setup() {
@@ -207,11 +208,16 @@ function draw() {
     document.getElementById("radiusSlider").value = OBList[activePlanet].radius
     document.getElementById("radiusBox").value = OBList[activePlanet].radius
   }
-
   if (pause===false) {
     stroke(255);
     background(220);
     image(backgroundImg, 0, 0, width, (backgroundImg.width/width)*backgroundImg.height)
+    image(lengthScaleImage,850,850)
+    stroke(0);
+    fill(0, 102, 153);
+    textSize(18);
+    text('500 000 km', 850, 910);
+    stroke(255);
     for (let i = 0; i < OBList.length; i++) {
       if (countFrames === 10) {
         uglyFix(activePlanet);
