@@ -35,8 +35,8 @@ function setup() {
   canvas = createCanvas(Height, Width);
   convert = new scaleConverter()
   canvas.parent('sketch-holder');
-  OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0,1))
-  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), -0.00005956, 0,2))
+  OBList.push(new OrbitalB(Width/2, Height/2, 50, 1.989*Math.pow(10, 30), 0, 0, 1))
+  OBList.push(new OrbitalB(500, 200, 10, 5.97*Math.pow(10,24), 0.00005956, 0, 2))
 
 
   loadPlanetEditor(activePlanet);
@@ -44,12 +44,10 @@ function setup() {
   //Buttons
   pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
   pauseButton.position(200,20);
-  createPlanetButton = createButton('New planet');
   pauseButton.mousePressed(pause_unpause);
-  createPlanetButton.position(400,925);
-  createPlanetButton.mousePressed(createNewPlanet);
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
+
 
 function saveSettings() {
   OBList[activePlanet].image =  document.getElementById("planetSkinsSelect").options[document.getElementById("planetSkinsSelect").selectedIndex].value;
@@ -215,7 +213,7 @@ function draw() {
     stroke(0);
     fill(0, 102, 153);
     textSize(18);
-    text('500 000 km', 850, 910);
+    text('50 000 000 km', 850, 910);
     stroke(255);
     fill(255, 255, 255);
     for (let i = 0; i < OBList.length; i++) {
@@ -363,7 +361,7 @@ class scaleConverter {
 class trail{
   constructor(idx){
   this.idx = idx
-  this.trailLength = 100
+  this.trailLength = 1000
   this.trailOn = true
   this.pointsX = []
   this.pointsY = []

@@ -34,13 +34,19 @@
   <div style="width: 100%; overflow: hidden;">
     <div style="width: 300px; float: left;">
       <h1>Editor</h1>
+      <div>
       <h3>Generel settings</h3>
       <p>timescale (antal simulerede sekunder pr sekund): </p>
         <input type="range" min="0" max="1000000" value="36000" id="timescaleSlider">  <input type="text" size="10" value="36000"  id="timescaleBox">
       <br>
       <p>Colissions on/off:</p>
-      <input type="checkbox" id="colissionCheckbox" checked="true" >
+      <input margin-top=" 0" type="checkbox" id="colissionCheckbox" checked="true" >
       <br>
+      <button  id="createPlanetButton" onclick="createNewPlanet()" style="color:white;background-color:blue;padding: 10 10 10 10;border: none; "> Create new planet</button>
+      <br>
+      <p>Unmute/Mute</p>
+      <img src="assets/unmute.svg" id="muteKnap" onclick="playsong()"></img>
+    </div>
       <h3>Planet settings</h3>
       <p>Picture of planet<p>
       <img height="50px" width="50px" id="activePlanetPic" src="https://i.imgur.com/b5aWo6E.png"></img>
@@ -75,7 +81,8 @@
       <br>
       Synths from ©Music Maker and music made by Anders Bjerrum Jensen
       <br>
-      <img src="assets/unmute.svg" id="muteKnap" onclick="playsong()"></img> </div>
+
+    </div>
 
     <div style="margin-left: 320px;" id="sketch-holder"></div>
 </div>
