@@ -183,8 +183,16 @@ function uglyFix(idx) {
 }
 function pause_unpause() {
   if (pause==false) {
+    pauseButton.remove()
+    pauseButton = createImg('https://i.imgur.com/FWWyfdy.png');
+    pauseButton.position(200,20, 10, 10);
+    pauseButton.mousePressed(pause_unpause);
     pause = true;
   } else {
+    pauseButton.remove()
+    pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
+    pauseButton.position(200,20, 10, 10);
+    pauseButton.mousePressed(pause_unpause);
     pause = false
   }
 }
