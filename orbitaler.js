@@ -25,8 +25,8 @@ function preload() {
   pauseicon = loadImage('https://i.imgur.com/9QKrCtH.png')
   backgroundImg = loadImage('https://i.imgur.com/MHu6bBY.jpg')
   lengthScaleImage = loadImage('https://i.imgur.com/BilmiNC.png')
-  planetSkinsRaw = ['https://i.imgur.com/b5aWo6E.png','https://i.imgur.com/lG3jIA3.png']
-  planetSkins = [null, loadImage('https://i.imgur.com/b5aWo6E.png'),loadImage('https://i.imgur.com/lG3jIA3.png'),]
+  planetSkinsRaw = ['https://i.imgur.com/NlPmWqd.png','https://i.imgur.com/b5aWo6E.png','https://i.imgur.com/lG3jIA3.png','https://i.imgur.com/NbokweX.png']
+  planetSkins = [loadImage('https://i.imgur.com/NlPmWqd.png'), loadImage('https://i.imgur.com/b5aWo6E.png'),loadImage('https://i.imgur.com/lG3jIA3.png'),loadImage('https://i.imgur.com/NbokweX.png')]
 }
 
 function setup() {
@@ -52,6 +52,8 @@ function setup() {
 }
 
 function saveSettings() {
+  OBList[activePlanet].image =  document.getElementById("planetSkinsSelect").options[document.getElementById("planetSkinsSelect").selectedIndex].value;
+  document.getElementById("activePlanetPic").src = planetSkinsRaw[OBList[activePlanet].image];
   timeRatio = document.getElementById("timescaleBox").value*60
   document.getElementById("timescaleSlider").value = document.getElementById("timescaleBox").value
   CollisionFlag = document.getElementById("colissionCheckbox").checked
@@ -76,7 +78,7 @@ function removePlanet(planetIdx) {
 }
 
 function createNewPlanet() {
-  OBList.push(new OrbitalB(0, 0, 20, 1, 0, 0))
+  OBList.push(new OrbitalB(0, 0, 20, 1, 0, 0, 0))
 }
 
 function mousePressed(){
@@ -99,9 +101,9 @@ function mousePressed(){
   }
 }
 
-
-
 function loadPlanetEditor(idx) {
+  document.getElementById("planetSkinsSelect").selectedIndex = OBList[idx].image
+  document.getElementById("activePlanetPic").src = planetSkinsRaw[OBList[idx].image]
   document.getElementById("radiusSlider").value = OBList[idx].radius
   document.getElementById("radiusBox").value = OBList[idx].radius
   temp = 0
@@ -126,7 +128,6 @@ function loadPlanetEditor(idx) {
     document.getElementById("trailCheckbox").checked = false;
   }
 }
-
 
 function uglyFix(idx) {
   temp = 0
@@ -236,6 +237,13 @@ function draw() {
   }
   else {
     image(backgroundImg, 0, 0, width, (backgroundImg.width/width)*backgroundImg.height)
+    image(lengthScaleImage,850,850)
+    stroke(0);
+    fill(0, 102, 153);
+    textSize(18);
+    text('500 000 km', 850, 910);
+    stroke(255);
+    fill(255, 255, 255);
     for (let i = 0; i < OBList.length; i++) {
       if (OBList[i].moveByMouse == true) {
         OBList[i].move();
@@ -282,14 +290,10 @@ class OrbitalB {
     this.speedy = InSpeedy
     this.mass = mass;
     this.idx = OBnumber
-    this.image = planetSkins[skin]
+    this.image = skin
     OBnumber += 1
     trailList.push(new trail(this.idx))
     this.moveByMouse = false
-  }
-
-  setImg(img){
-    this.image = img
   }
 
   accelerate(obj) {
@@ -319,7 +323,7 @@ class OrbitalB {
     if (this.image == null) {
     ellipse(this.x, this.y, this.radius*2, this.radius*2);
     } else {
-    image(this.image, this.x - this.radius, this.y - this.radius, this.radius*2, this.radius*2)
+    image(planetSkins[this.image], this.x - this.radius, this.y - this.radius, this.radius*2, this.radius*2)
     }
   }
 
