@@ -42,8 +42,8 @@ function setup() {
   loadPlanetEditor(activePlanet);
 
   //Buttons
-  pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
-  pauseButton.position(200,20);
+  pauseButton = createImg('https://i.imgur.com/FWWyfdy.png');
+  pauseButton.position(470,385);
   pauseButton.mousePressed(pause_unpause);
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
@@ -182,14 +182,15 @@ function uglyFix(idx) {
 function pause_unpause() {
   if (pause==false) {
     pauseButton.remove()
-    pauseButton = createImg('https://i.imgur.com/FWWyfdy.png');
-    pauseButton.position(200,20, 10, 10);
+    pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
+
+    pauseButton.position(470,385);
     pauseButton.mousePressed(pause_unpause);
     pause = true;
   } else {
     pauseButton.remove()
-    pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
-    pauseButton.position(200,20, 10, 10);
+    pauseButton = createImg('https://i.imgur.com/FWWyfdy.png');
+    pauseButton.position(470,385);
     pauseButton.mousePressed(pause_unpause);
     pause = false
   }
@@ -247,7 +248,7 @@ function draw() {
     stroke(0);
     fill(0, 102, 153);
     textSize(18);
-    text('500 000 km', 850, 910);
+    text('50 000 000 km', 850, 910);
     stroke(255);
     fill(255, 255, 255);
     for (let i = 0; i < OBList.length; i++) {
