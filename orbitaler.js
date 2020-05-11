@@ -43,7 +43,7 @@ function setup() {
 
   //Buttons
   pauseButton = createImg('https://i.imgur.com/FWWyfdy.png');
-  pauseButton.position(470,385);
+  pauseButton.position(470,437);
   pauseButton.mousePressed(pause_unpause);
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
@@ -183,14 +183,13 @@ function pause_unpause() {
   if (pause==false) {
     pauseButton.remove()
     pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
-
-    pauseButton.position(470,385);
+    pauseButton.position(470,437);
     pauseButton.mousePressed(pause_unpause);
     pause = true;
   } else {
     pauseButton.remove()
     pauseButton = createImg('https://i.imgur.com/FWWyfdy.png');
-    pauseButton.position(470,385);
+    pauseButton.position(470,437);
     pauseButton.mousePressed(pause_unpause);
     pause = false
   }
