@@ -12,7 +12,7 @@ let createPlanetButton;
 let createFlag = false;
 let activePlanet = 1;
 let planetSkins = []
-
+let speedChangeFlag = false;
 let sunImg
 let earthImg
 
@@ -43,12 +43,14 @@ function setup() {
 
   //Buttons
   pauseButton = createImg('https://i.imgur.com/FWWyfdy.png');
-  pauseButton.position(470,437);
+  pauseButton.position(468,480);
   pauseButton.mousePressed(pause_unpause);
   //OBList.push(new OrbitalB(450, 185, 3, 7.34*5*Math.pow(10,22), -3, 0))
 }
 
-
+function speedBoxClicked() {
+  speedChangeFlag = true;
+}
 function saveSettings() {
   OBList[activePlanet].image =  document.getElementById("planetSkinsSelect").options[document.getElementById("planetSkinsSelect").selectedIndex].value;
   document.getElementById("activePlanetPic").src = planetSkinsRaw[OBList[activePlanet].image];
@@ -58,8 +60,11 @@ function saveSettings() {
   OBList[activePlanet].radius = document.getElementById("radiusBox").value
   document.getElementById("radiusSlider").value = document.getElementById("radiusBox").value
   OBList[activePlanet].mass = document.getElementById("massBox").value*Math.pow(10,document.getElementById("massExponentBox").value)
-  OBList[activePlanet].speedx = convert.disRTG(document.getElementById("speedxBox").value)*Math.pow(10,document.getElementById("speedxExponentBox").value)
-  OBList[activePlanet].speedy = convert.disRTG(document.getElementById("speedyBox").value)*Math.pow(10,document.getElementById("speedyExponentBox").value)
+  if (speedChangeFlag) {
+    OBList[activePlanet].speedx = convert.disRTG(document.getElementById("speedxBox").value)*Math.pow(10,document.getElementById("speedxExponentBox").value)
+    OBList[activePlanet].speedy = convert.disRTG(document.getElementById("speedyBox").value)*Math.pow(10,document.getElementById("speedyExponentBox").value)
+    speedChangeFlag = false;
+  }
   trailList[activePlanet].trailLength = document.getElementById("trailLengthBox").value
   trailList[activePlanet].trailOn = document.getElementById("trailCheckbox").checked
 }
@@ -183,13 +188,13 @@ function pause_unpause() {
   if (pause==false) {
     pauseButton.remove()
     pauseButton = createImg('https://i.imgur.com/mvth4yQ.png');
-    pauseButton.position(470,437);
+    pauseButton.position(468,480);
     pauseButton.mousePressed(pause_unpause);
     pause = true;
   } else {
     pauseButton.remove()
     pauseButton = createImg('https://i.imgur.com/FWWyfdy.png');
-    pauseButton.position(470,437);
+    pauseButton.position(468,480);
     pauseButton.mousePressed(pause_unpause);
     pause = false
   }
@@ -325,7 +330,9 @@ class OrbitalB {
   }
 
   display() {
-    trailList[this.idx].drawTrail()
+    if(trailList[this.idx].trailOn) {
+      trailList[this.idx].drawTrail()
+    }
     if (this.image == null) {
     ellipse(this.x, this.y, this.radius*2, this.radius*2);
     } else {
