@@ -15,8 +15,8 @@ let planetSkins = []
 let speedChangeFlag = false;
 let sunImg
 let earthImg
-
-
+let vectorScaler = 50000000;
+let showVector = true;
 let CollisionFlag = true;
 
 OBnumber = 0;
@@ -27,6 +27,37 @@ function preload() {
   lengthScaleImage = loadImage('https://i.imgur.com/BilmiNC.png')
   planetSkinsRaw = ['https://i.imgur.com/NlPmWqd.png','https://i.imgur.com/b5aWo6E.png','https://i.imgur.com/lG3jIA3.png','https://i.imgur.com/NbokweX.png']
   planetSkins = [loadImage('https://i.imgur.com/NlPmWqd.png'), loadImage('https://i.imgur.com/b5aWo6E.png'),loadImage('https://i.imgur.com/lG3jIA3.png'),loadImage('https://i.imgur.com/NbokweX.png')]
+}
+
+function drawVector(x1,y1,x2,y2,color) {
+strokeWeight(2);
+  if (color==="red") {
+      stroke(245, 12, 51);
+  }
+  if (color==="blue") {
+      stroke(0, 62, 161);
+  }
+  print("")
+  print(x1)
+  print(x2)
+  print("")
+  line(x1,y1,x2,y2);
+  stroke(255, 255, 255);
+  //Work on this if you want nice arrow
+  // if (distance(x1,y1,x2,y2)*vectorScaler < 5) {
+  //   return false
+  // }
+  //
+  // beginShape();
+  // vertex(5,12.5);
+  // vertex(40,12.5);
+  // vertex(40,10);
+  // vertex(45,13.75);
+  // vertex(40,17.5);
+  // vertex(40,15);
+  // vertex(5,15);
+  // endShape(CLOSE);
+  strokeWeight(1);
 }
 
 function setup() {
@@ -52,6 +83,7 @@ function speedBoxClicked() {
   speedChangeFlag = true;
 }
 function saveSettings() {
+  showVector = document.getElementById("vectorCheckbox").checked
   OBList[activePlanet].image =  document.getElementById("planetSkinsSelect").options[document.getElementById("planetSkinsSelect").selectedIndex].value;
   document.getElementById("activePlanetPic").src = planetSkinsRaw[OBList[activePlanet].image];
   timeRatio = document.getElementById("timescaleBox").value*60
@@ -311,6 +343,9 @@ class OrbitalB {
     if (this.moveByMouse == false) {
       for (let i = 0; i < OBList.length; i++) {
         if (i != this.idx) {
+          if (showVector) {
+            drawVector(this.x,this.y,this.x + vectorScaler*convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[0]*calc_accel(gravity_force(this, OBList[i]),this)),this.y + vectorScaler*convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this)), "blue")
+          }
           this.speedx += convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[0]*calc_accel(gravity_force(this, OBList[i]),this));
           this.speedy += convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this));
         }
@@ -320,6 +355,9 @@ class OrbitalB {
 
   move() {
     if (this.moveByMouse != true) {
+      if (showVector) {
+        drawVector(this.x,this.y,this.x + vectorScaler*timeRatio/60*this.speedx/2000000,this.y + vectorScaler*timeRatio/60*this.speedy/2000000, "red")
+      }
       this.x += timeRatio/60*this.speedx;
       this.y += timeRatio/60*this.speedy;
     } else {
@@ -334,9 +372,9 @@ class OrbitalB {
       trailList[this.idx].drawTrail()
     }
     if (this.image == null) {
-    ellipse(this.x, this.y, this.radius*2, this.radius*2);
+      ellipse(this.x, this.y, this.radius*2, this.radius*2);
     } else {
-    image(planetSkins[this.image], this.x - this.radius, this.y - this.radius, this.radius*2, this.radius*2)
+      image(planetSkins[this.image], this.x - this.radius, this.y - this.radius, this.radius*2, this.radius*2)
     }
   }
 
@@ -387,7 +425,6 @@ class trail{
   }
 
   drawTrail(){
-    stroke
     if (this.pointsX.length > this.trailLength ){
     for (let i = this.pointsX.length - this.trailLength + 1; i < this.pointsX.length; i++){
       line(this.pointsX[i-1], this.pointsY[i-1], this.pointsX[i], this.pointsY[i])
