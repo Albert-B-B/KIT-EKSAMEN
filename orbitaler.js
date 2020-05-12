@@ -15,7 +15,8 @@ let planetSkins = []
 let speedChangeFlag = false;
 let sunImg
 let earthImg
-let vectorScaler = 50000000;
+let vectorScaler = 5000;
+let vectorScalerSpeed = 500000;
 let showVector = true;
 let CollisionFlag = true;
 
@@ -37,10 +38,6 @@ strokeWeight(2);
   if (color==="blue") {
       stroke(0, 62, 161);
   }
-  print("")
-  print(x1)
-  print(x2)
-  print("")
   line(x1,y1,x2,y2);
   stroke(255, 255, 255);
   //Work on this if you want nice arrow
@@ -343,11 +340,11 @@ class OrbitalB {
     if (this.moveByMouse == false) {
       for (let i = 0; i < OBList.length; i++) {
         if (i != this.idx) {
-          if (showVector) {
-            drawVector(this.x,this.y,this.x + vectorScaler*convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[0]*calc_accel(gravity_force(this, OBList[i]),this)),this.y + vectorScaler*convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this)), "blue")
-          }
           this.speedx += convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[0]*calc_accel(gravity_force(this, OBList[i]),this));
           this.speedy += convert.disRTG(timeRatio/60*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this));
+          if (showVector) {
+            drawVector(this.x,this.y,this.x + vectorScaler*rotation_vector(this, OBList[i])[0]*calc_accel(gravity_force(this, OBList[i]),this) ,this.y + vectorScaler*rotation_vector(this, OBList[i])[1]*calc_accel(gravity_force(this, OBList[i]),this), "blue")
+          }
         }
       }
     }
@@ -355,14 +352,14 @@ class OrbitalB {
 
   move() {
     if (this.moveByMouse != true) {
-      if (showVector) {
-        drawVector(this.x,this.y,this.x + vectorScaler*timeRatio/60*this.speedx/2000000,this.y + vectorScaler*timeRatio/60*this.speedy/2000000, "red")
-      }
       this.x += timeRatio/60*this.speedx;
       this.y += timeRatio/60*this.speedy;
     } else {
       this.x = mouseX
       this.y = mouseY
+    }
+    if (showVector) {
+      drawVector(this.x,this.y,this.x + vectorScalerSpeed*this.speedx,this.y + vectorScalerSpeed*this.speedy, "red")
     }
     trailList[this.idx].record()
   }

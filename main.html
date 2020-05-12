@@ -52,10 +52,10 @@
       <br>
       <br>
       <p>Mass of planet in kg <span style="padding-left:30px;">10^x multiplier</span></p>
-          <input type="text" size="20" value="10" onclick="speedBoxClicked()" id="massBox"> <input type="text" size="10" value="10"  onclick="speedBoxClicked()" id="massExponentBox">
+          <input type="text" size="20" value="10" id="massBox"> <input type="text" size="10" value="10"  id="massExponentBox">
       <br>
       <p>Velocity x-axis in m/s <span style="padding-left:25px;">10^x multiplier</span></p>
-          <input type="text" size="20" value="10"  id="speedxBox"> <input type="text" size="10" value="10"  id="speedxExponentBox">
+          <input type="text" size="20" value="10" onclick="speedBoxClicked()"  id="speedxBox"> <input type="text" onclick="speedBoxClicked()" size="10" value="10"  id="speedxExponentBox">
       <br>
       <p>Velocity y-axis in m/s <span style="padding-left:25px;">10^x multiplier</span></p>
       <input type="text" size="20" value="10" onclick="speedBoxClicked()" id="speedyBox"> <input type="text" size="10" value="10" onclick="speedBoxClicked()"  id="speedyExponentBox">
@@ -80,7 +80,7 @@
       <h2>Generel settings</h2>
       <br>
       <p>Timescale (Simulated seconds pr second) </p>
-        <input type="range" class="slider" min="0" max="1000000" value="36000" id="timescaleSlider">  <input type="text" size="10" value="36000"  id="timescaleBox">
+        <input type="range" class="slider" min="0" max="200000" value="36000" id="timescaleSlider">  <input type="text" size="10" value="36000"  id="timescaleBox">
       <br>
       <br>
       <p>Colissions on/off</p>
